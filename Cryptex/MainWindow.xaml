@@ -3,13 +3,16 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:Cryptex"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml"
     x:Name="Window"
     Title="MainWindow"
-    Width="900"
-    Height="500"
+    Width="1000"
+    Height="600"
     AllowsTransparency="True"
     Background="{x:Null}"
     FontFamily="Google Sans"
@@ -21,12 +24,18 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Snackbar.xaml" />
+                <ResourceDictionary Source="Styles/NavigationStyle.xaml" />
                 <ResourceDictionary Source="Resources/images/Logo.xaml" />
                 <ResourceDictionary Source="Styles/HeaderWindowStyle.xaml" />
                 <ResourceDictionary Source="DataContextTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <materialDesign:Card
         Margin="5,5,5,5"
         VerticalAlignment="Stretch"
@@ -39,7 +48,7 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="190" />
+                <ColumnDefinition Width="200" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
@@ -50,7 +59,7 @@
                 Grid.Row="0"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                materialDesign:ShadowAssist.ShadowDepth="Depth1">
+                materialDesign:ShadowAssist.ShadowDepth="Depth0">
                 <Grid Background="White">
                     <Button
                         Width="40"
@@ -108,36 +117,39 @@
             <!--#endregion-->
 
             <!--#region Navigation-->
-
             <Border
                 Grid.Row="1"
                 Grid.Column="0"
-                Width="190"
-                HorizontalAlignment="Left"
-                Background="White"
                 BorderBrush="#44383838"
                 BorderThickness="0,1,1,0">
-                <StackPanel>
-                    <Grid x:Name="SettingsGrid">
-                        <StackPanel
-                            x:Name="GraphicsPanel"
-                            Height="40"
-                            Margin="0,140,0,540"
-                            Cursor="Hand">
-                            <Button
-                                Height="40"
-                                HorizontalContentAlignment="Left"
-                                ClipToBounds="True"
-                                Content="Ключи"
-                                FontSize="14"
-                                Foreground="#FF737373"
-                                Style="{StaticResource MaterialDesignToolForegroundButton}" />
-                        </StackPanel>
-                    </Grid>
-                </StackPanel>
+                <mde:SideNavigation
+                    x:Name="Navigation"
+                    Margin="0,-60,0,0"
+                    VerticalAlignment="Center"
+                    Items="{Binding NavigationItems, Mode=OneTime}"
+                    Style="{StaticResource MaterialSideNavigationBlock}"
+                    WillSelectNavigationItemCommand="{Binding SelectNavigationItemCommand}" />
             </Border>
+            <Grid
+                VerticalAlignment="Bottom"
+                ClipToBounds="True"
+                Column="0"
+                Row="1">
+                <Ellipse
+                    Width="127"
+                    Height="127"
+                    Margin="84,482,-21,-25"
+                    Fill="#FFBFDEFF" />
 
+                <Ellipse
+                    Width="167"
+                    Height="167"
+                    Margin="-47,450,0,-36"
+                    HorizontalAlignment="Left"
+                    Fill="#FF96CAFF" />
+            </Grid>
             <!--#endregion-->
+
             <Border
                 Grid.Row="1"
                 Grid.Column="1"
@@ -166,6 +178,7 @@
                 MessageQueue="{materialDesign:MessageQueue}">
                 <materialDesign:SnackbarMessage ActionCommand="Close" ActionContent="Закрыть" />
             </materialDesign:Snackbar>
+
         </Grid>
     </materialDesign:Card>
 </Window>

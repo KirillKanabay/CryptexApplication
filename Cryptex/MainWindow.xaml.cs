@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using MaterialDesignThemes.Wpf;
 
 namespace Cryptex
@@ -17,8 +18,14 @@ namespace Cryptex
         public MainWindow()
         {
             InitializeComponent();
+            HeaderPanel.MouseDown += DragWindow;
             GetMainWindow += () => this;
             SendSnackbarAction += SendSnackbar;
+        }
+
+        private void DragWindow(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == 0) { DragMove(); }
         }
 
         public void SendSnackbar(string message)
