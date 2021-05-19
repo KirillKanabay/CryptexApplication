@@ -29,8 +29,8 @@ namespace Cryptex
                 NavigationViewModels = new Dictionary<string, BaseViewModel>()
                 {
                     {"Ключи", c.Resolve<KeysViewModel>()},
-                    {"Подпись сообщений", c.Resolve<SecureMessagesViewModel>()},
-                    {"Подпись файлов", c.Resolve<SecureFileViewModel>()},
+                    {"Работа с текстом", c.Resolve<SecureMessagesViewModel>()},
+                    {"Работа с файлами", c.Resolve<SecureFileViewModel>()},
                     {"Демонстрация RSA", c.Resolve<RsaDemoViewModel>()},
                     {"Демонстрация DH", c.Resolve<DiffieHellmanDemoViewModel>()},
                     {"О программе", c.Resolve<AboutProgramViewModel>()},

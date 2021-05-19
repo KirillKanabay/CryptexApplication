@@ -9,23 +9,42 @@ namespace Cryptex.ViewModels
 {
     public class MainViewModel:BaseViewModel
     {
+        #region Поля
+
+        private BaseViewModel _currentViewModel;
+
+        #endregion
+        
+        #region Свойства
+        public BaseViewModel CurrentViewModel
+        {
+            get => _currentViewModel;
+            set
+            {
+                _currentViewModel = value;
+                OnPropertyChanged(nameof(CurrentViewModel));
+            }
+        }
+
         /// <summary>
         /// ViewModels для навигации.
         /// Регистрация происходит здесь: <see cref="Cryptex.ConfigureContainer"/>
         /// </summary>
-        public Dictionary<string, BaseViewModel> NavigationViewModels { get; set; } 
-        public BaseViewModel CurrentViewModel { get; private set; }
+        public Dictionary<string, BaseViewModel> NavigationViewModels { get; set; }
+
         public List<INavigationItem> NavigationItems => new List<INavigationItem>()
         {
             new FirstLevelNavigationItem() { Label = "Ключи", Icon = PackIconKind.KeyChain, IsSelected = true },
-            new FirstLevelNavigationItem() { Label = "Подпись сообщений", Icon = PackIconKind.MessageTextLock},
-            new FirstLevelNavigationItem() { Label = "Подпись файлов", Icon = PackIconKind.FileKey},
+            new FirstLevelNavigationItem() { Label = "Работа с текстом", Icon = PackIconKind.MessageTextLock},
+            new FirstLevelNavigationItem() { Label = "Работа с файлами", Icon = PackIconKind.FileKey},
             new DividerNavigationItem(),
             new FirstLevelNavigationItem() { Label = "Демонстрация RSA", Icon = PackIconKind.EyeOutline},
             new FirstLevelNavigationItem() { Label = "Демонстрация DH", Icon = PackIconKind.EyeOutline},
             new DividerNavigationItem(),
             new FirstLevelNavigationItem() { Label = "О программе", Icon = PackIconKind.InformationOutline},
         };
+
+        #endregion
 
         #region Команды
         public DelegateCommand SelectNavigationItemCommand => new DelegateCommand(parameter =>
