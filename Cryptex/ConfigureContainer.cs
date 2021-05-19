@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Cryptex.ViewModels;
 
 namespace Cryptex
 {
@@ -14,7 +15,7 @@ namespace Cryptex
 
         private void RegisterViewModels(ContainerBuilder builder)
         {
-
+            builder.RegisterType<MainViewModel>().AsSelf().InstancePerLifetimeScope();
         }
 
         private void RegisterServices(ContainerBuilder builder)

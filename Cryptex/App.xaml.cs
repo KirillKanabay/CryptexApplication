@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Autofac;
+using Cryptex.ViewModels;
 
 namespace Cryptex
 {
@@ -24,6 +25,7 @@ namespace Cryptex
             using (var scope = Container.BeginLifetimeScope())
             {
                 Window startWindow = new MainWindow();
+                startWindow.DataContext = scope.Resolve<MainViewModel>();
                 startWindow.Show();
             }
 
