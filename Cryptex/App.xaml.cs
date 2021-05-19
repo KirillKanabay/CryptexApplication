@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Autofac;
 
 namespace Cryptex
 {
@@ -13,5 +14,20 @@ namespace Cryptex
     /// </summary>
     public partial class App : Application
     {
+        public IContainer Container { get; private set; }
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            var containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterModule<ConfigureContainer>();
+            Container = containerBuilder.Build();
+
+            using (var scope = Container.BeginLifetimeScope())
+            {
+                Window startWindow = new MainWindow();
+                startWindow.Show();
+            }
+
+            base.OnStartup(e);
+        }
     }
 }
