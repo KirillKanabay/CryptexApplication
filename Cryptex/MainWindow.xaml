@@ -6,39 +6,166 @@
     xmlns:local="clr-namespace:Cryptex"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="Window"
     Title="MainWindow"
-    Width="800"
-    Height="450"
+    Width="900"
+    Height="500"
+    AllowsTransparency="True"
+    Background="{x:Null}"
+    FontFamily="Google Sans"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
     mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Snackbar.xaml" />
+                <ResourceDictionary Source="Resources/images/Logo.xaml" />
+                <ResourceDictionary Source="Styles/HeaderWindowStyle.xaml" />
                 <ResourceDictionary Source="DataContextTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid>
-        <TextBlock FontSize="14" Text="{Binding TestString}" />
-        <materialDesign:DialogHost
-            x:Name="DialogHost"
-            Grid.Row="1"
-            CloseOnClickAway="True"
-            Identifier="RootDialog">
-            <materialDesign:DrawerHost x:Name="DrawerHost" />
-        </materialDesign:DialogHost>
-        <materialDesign:Snackbar
-            x:Name="Snackbar"
-            Grid.Column="1"
-            Margin="0,0,10,20"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
-            ActionButtonPlacement="Inline"
-            ActionButtonStyle="{StaticResource MaterialDesignSnackbarActionMidButton}"
-            IsActive="False"
-            MessageQueue="{materialDesign:MessageQueue}">
-            <materialDesign:SnackbarMessage ActionCommand="Close" ActionContent="Закрыть" />
-        </materialDesign:Snackbar>
-    </Grid>
+    <materialDesign:Card
+        Margin="5,5,5,5"
+        VerticalAlignment="Stretch"
+        materialDesign:ShadowAssist.ShadowDepth="Depth2"
+        Background="White"
+        UniformCornerRadius="5">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="190" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <!--#region HeaderPanel-->
+
+            <materialDesign:Card
+                x:Name="HeaderPanel"
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                materialDesign:ShadowAssist.ShadowDepth="Depth1">
+                <Grid Background="White">
+                    <Button
+                        Width="40"
+                        Height="25"
+                        HorizontalAlignment="Right"
+                        materialDesign:RippleAssist.IsCentered="True"
+                        materialDesign:RippleAssist.RippleSizeMultiplier="0.7"
+                        Command="{Binding CloseWindow}"
+                        CommandParameter="{Binding ElementName=Window}"
+                        Cursor="Hand"
+                        Style="{StaticResource HoverCloseButton}"
+                        ToolTip="Закрыть">
+                        <materialDesign:PackIcon
+                            Width="15"
+                            Height="15"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Kind="WindowClose" />
+                    </Button>
+                    <Button
+                        Width="40"
+                        Height="25"
+                        Margin="0,0,40,0"
+                        HorizontalAlignment="Right"
+                        materialDesign:RippleAssist.IsCentered="True"
+                        materialDesign:RippleAssist.RippleSizeMultiplier="0.7"
+                        Command="{Binding MinimizeWindow}"
+                        CommandParameter="{Binding ElementName=Window}"
+                        Cursor="Hand"
+                        Style="{StaticResource HoverMinimizeButton}"
+                        ToolTip="Свернуть">
+                        <materialDesign:PackIcon
+                            Width="15"
+                            Height="15"
+                            HorizontalAlignment="Center"
+                            Kind="Minus" />
+                    </Button>
+                    <StackPanel
+                        Height="25"
+                        Margin="10,0,0,0"
+                        Orientation="Horizontal">
+                        <Image Height="14" Source="{StaticResource LogoImage}" />
+                        <TextBlock
+                            Margin="3,0,0,0"
+                            VerticalAlignment="Center"
+                            FontSize="15"
+                            FontWeight="Bold"
+                            Foreground="#2196f3">
+                            Cryptex
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
+            </materialDesign:Card>
+
+            <!--#endregion-->
+
+            <!--#region Navigation-->
+
+            <Border
+                Grid.Row="1"
+                Grid.Column="0"
+                Width="190"
+                HorizontalAlignment="Left"
+                Background="White"
+                BorderBrush="#44383838"
+                BorderThickness="0,1,1,0">
+                <StackPanel>
+                    <Grid x:Name="SettingsGrid">
+                        <StackPanel
+                            x:Name="GraphicsPanel"
+                            Height="40"
+                            Margin="0,140,0,540"
+                            Cursor="Hand">
+                            <Button
+                                Height="40"
+                                HorizontalContentAlignment="Left"
+                                ClipToBounds="True"
+                                Content="Ключи"
+                                FontSize="14"
+                                Foreground="#FF737373"
+                                Style="{StaticResource MaterialDesignToolForegroundButton}" />
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!--#endregion-->
+            <Border
+                Grid.Row="1"
+                Grid.Column="1"
+                BorderBrush="#44383838"
+                BorderThickness="0,1,0,0">
+                <ContentControl Content="{Binding CurrentViewModel}" />
+            </Border>
+            <materialDesign:DialogHost
+                x:Name="DialogHost"
+                Grid.Row="1"
+                Grid.Column="1"
+                CloseOnClickAway="True"
+                Identifier="RootDialog">
+                <materialDesign:DrawerHost x:Name="DrawerHost" />
+            </materialDesign:DialogHost>
+            <materialDesign:Snackbar
+                x:Name="Snackbar"
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="0,0,10,20"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                ActionButtonPlacement="Inline"
+                ActionButtonStyle="{StaticResource MaterialDesignSnackbarActionMidButton}"
+                IsActive="False"
+                MessageQueue="{materialDesign:MessageQueue}">
+                <materialDesign:SnackbarMessage ActionCommand="Close" ActionContent="Закрыть" />
+            </materialDesign:Snackbar>
+        </Grid>
+    </materialDesign:Card>
 </Window>
