@@ -8,7 +8,7 @@ using Cryptex.Services.Helpers;
 
 namespace Cryptex.Services
 {
-    public class DemoRsaCryptography
+    public class DemoRsaCryptography : IDemoRsaCryptography
     {
         private readonly IPrimeNumbersWorker _primeNumbersWorker;
         

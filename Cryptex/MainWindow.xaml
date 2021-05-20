@@ -47,10 +47,6 @@
                 <RowDefinition Height="25" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
 
             <!--#region HeaderPanel-->
 
@@ -116,69 +112,72 @@
 
             <!--#endregion-->
 
-            <!--#region Navigation-->
-            <Border
-                Grid.Row="1"
-                Grid.Column="0"
-                BorderBrush="#44383838"
-                BorderThickness="0,1,1,0">
-                <mde:SideNavigation
-                    x:Name="Navigation"
-                    Margin="0,-60,0,0"
-                    VerticalAlignment="Center"
-                    Items="{Binding NavigationItems, Mode=OneTime}"
-                    Style="{StaticResource MaterialSideNavigationBlock}"
-                    WillSelectNavigationItemCommand="{Binding SelectNavigationItemCommand}" />
-            </Border>
-            <Grid
-                VerticalAlignment="Bottom"
-                ClipToBounds="True"
-                Column="0"
-                Row="1">
-                <Ellipse
-                    Width="127"
-                    Height="127"
-                    Margin="84,482,-21,-25"
-                    Fill="#FFBFDEFF" />
-
-                <Ellipse
-                    Width="167"
-                    Height="167"
-                    Margin="-47,450,0,-36"
-                    HorizontalAlignment="Left"
-                    Fill="#FF96CAFF" />
-            </Grid>
-            <!--#endregion-->
-
-            <Border
-                Grid.Row="1"
-                Grid.Column="1"
-                BorderBrush="#44383838"
-                BorderThickness="0,1,0,0">
-                <ContentControl Content="{Binding CurrentViewModel}" />
-            </Border>
             <materialDesign:DialogHost
                 x:Name="DialogHost"
                 Grid.Row="1"
-                Grid.Column="1"
                 CloseOnClickAway="True"
                 Identifier="RootDialog">
-                <materialDesign:DrawerHost x:Name="DrawerHost" />
-            </materialDesign:DialogHost>
-            <materialDesign:Snackbar
-                x:Name="Snackbar"
-                Grid.Row="1"
-                Grid.Column="1"
-                Margin="0,0,10,20"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom"
-                ActionButtonPlacement="Inline"
-                ActionButtonStyle="{StaticResource MaterialDesignSnackbarActionMidButton}"
-                IsActive="False"
-                MessageQueue="{materialDesign:MessageQueue}">
-                <materialDesign:SnackbarMessage ActionCommand="Close" ActionContent="Закрыть" />
-            </materialDesign:Snackbar>
+                <materialDesign:DrawerHost x:Name="DrawerHost">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <!--#region Navigation-->
+                        <Border
+                            Grid.Column="0"
+                            BorderBrush="#44383838"
+                            BorderThickness="0,1,1,0">
+                            <mde:SideNavigation
+                                x:Name="Navigation"
+                                Margin="0,-60,0,0"
+                                VerticalAlignment="Center"
+                                Items="{Binding NavigationItems, Mode=OneTime}"
+                                Style="{StaticResource MaterialSideNavigationBlock}"
+                                WillSelectNavigationItemCommand="{Binding SelectNavigationItemCommand}" />
+                        </Border>
+                        <Grid
+                            VerticalAlignment="Bottom"
+                            ClipToBounds="True"
+                            Column="0">
+                            <Ellipse
+                                Width="127"
+                                Height="127"
+                                Margin="84,482,-21,-25"
+                                Fill="#FFBFDEFF" />
 
+                            <Ellipse
+                                Width="167"
+                                Height="167"
+                                Margin="-47,450,0,-36"
+                                HorizontalAlignment="Left"
+                                Fill="#FF96CAFF" />
+                        </Grid>
+                        <!--#endregion-->
+
+
+                        <Border
+                            Grid.Column="1"
+                            BorderBrush="#44383838"
+                            BorderThickness="0,1,0,0">
+                            <ContentControl Content="{Binding CurrentViewModel}" />
+                        </Border>
+
+                        <materialDesign:Snackbar
+                            x:Name="Snackbar"
+                            Grid.Column="1"
+                            Margin="0,0,10,20"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            ActionButtonPlacement="Inline"
+                            ActionButtonStyle="{StaticResource MaterialDesignSnackbarActionMidButton}"
+                            IsActive="False"
+                            MessageQueue="{materialDesign:MessageQueue}">
+                            <materialDesign:SnackbarMessage ActionCommand="Close" ActionContent="Закрыть" />
+                        </materialDesign:Snackbar>
+                    </Grid>
+                </materialDesign:DrawerHost>
+            </materialDesign:DialogHost>
         </Grid>
     </materialDesign:Card>
 </Window>

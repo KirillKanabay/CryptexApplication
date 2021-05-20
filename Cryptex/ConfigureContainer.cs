@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using Autofac;
+using Cryptex.Models;
+using Cryptex.Services;
+using Cryptex.Services.Helpers;
 using Cryptex.ViewModels;
+using Cryptex.ViewModels.RsaDemoViewModels;
 
 namespace Cryptex
 {
@@ -20,7 +24,18 @@ namespace Cryptex
             builder.RegisterType<SecureFileViewModel>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<SecureMessagesViewModel>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<DiffieHellmanDemoViewModel>().AsSelf().InstancePerLifetimeScope();
+
+            #region RSA Demo
+
             builder.RegisterType<RsaDemoViewModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<StepperRsaInfoViewModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<StepperRsaSetPQViewModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<StepperRsaCalculateViewModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<StepperRsaEncryptViewModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<StepperRsaDecryptViewModel>().AsSelf().InstancePerLifetimeScope();
+
+            #endregion
+
             builder.RegisterType<AboutProgramViewModel>().AsSelf().InstancePerDependency();
 
             builder.Register(c => new MainViewModel()
@@ -40,12 +55,14 @@ namespace Cryptex
 
         private void RegisterServices(ContainerBuilder builder)
         {
-
+            builder.RegisterType<DemoRsaCryptography>().As<IDemoRsaCryptography>().InstancePerDependency();
+            builder.RegisterType<PrimeNumbersWorker>().As<IPrimeNumbersWorker>().InstancePerLifetimeScope();
         }
 
         private void RegisterModels(ContainerBuilder builder)
         {
-
+            builder.RegisterType<RsaInfoModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<RsaDemoModel>().AsSelf().InstancePerLifetimeScope();
         }
 
         private void RegisterViews(ContainerBuilder builder)
