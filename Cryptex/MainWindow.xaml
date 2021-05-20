@@ -11,8 +11,8 @@
     xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml"
     x:Name="Window"
     Title="MainWindow"
-    Width="1000"
-    Height="600"
+    Width="1200"
+    Height="700"
     AllowsTransparency="True"
     Background="{x:Null}"
     FontFamily="Google Sans"
@@ -161,6 +161,7 @@
                             BorderBrush="#44383838"
                             BorderThickness="0,1,0,0">
                             <ContentControl Content="{Binding CurrentViewModel}" />
+
                         </Border>
 
                         <materialDesign:Snackbar

@@ -1,16 +1,25 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using Cryptex.Helpers.Commands;
 using Cryptex.Models;
 using Cryptex.Validators;
+using Cryptex.Views.Dialogs;
+using MaterialDesignThemes.Wpf;
 
 namespace Cryptex.ViewModels.RsaDemoViewModels
 {
-    public class StepperRsaSetPQViewModel :BaseViewModel, IDataErrorInfo
+    public class StepperRsaSetPQViewModel : BaseViewModel, IDataErrorInfo
     {
         private string _p;
         private string _q;
         private readonly RsaDemoModel _rsaDemoModel;
+        private bool _isSetup;
+
+        private Visibility _progressBarVisibility = Visibility.Collapsed;
+        
         public StepperRsaSetPQViewModel(RsaDemoModel rsaDemoModel)
         {
             _rsaDemoModel = rsaDemoModel;
@@ -36,26 +45,51 @@ namespace Cryptex.ViewModels.RsaDemoViewModels
             }
         }
 
-        public bool ButtonIsEnabled
+        public bool SetupButtonIsEnabled => !_errors.Any();
+        public bool ButtonIsEnabled => !_errors.Any() && _isSetup;
+
+        public Visibility ProgressBarVisibility
         {
-            get
+            get => _progressBarVisibility;
+            set
             {
-                if (P == Q)
-                {
-                    return false;
-                }
-
-                if (!_errors.Any())
-                {
-                    _rsaDemoModel.DemoRsa.PSet(ulong.Parse(P));
-                    _rsaDemoModel.DemoRsa.QSet(ulong.Parse(Q));
-                    
-                    return true;
-                }
-
-                return false;
+                _progressBarVisibility = value;
+                OnPropertyChanged(nameof(ProgressBarVisibility));
             }
         }
+        #region Команды
+
+        public AsyncRelayCommand Setup => new AsyncRelayCommand(SetupMethod,
+            (ex) => { ExecuteRunDialog(new MessageDialogProperty() {Title = "Ошибка", Message = ex.Message}); });
+
+        private async Task SetupMethod(object arg)
+        {
+            ProgressBarVisibility = Visibility.Visible;
+            
+            await _rsaDemoModel.SetP(long.Parse(P));
+            await _rsaDemoModel.SetQ(long.Parse(Q));
+            await _rsaDemoModel.Calculate();
+
+            _isSetup = true;
+            OnPropertyChanged(nameof(ButtonIsEnabled));
+
+            ProgressBarVisibility = Visibility.Collapsed;
+
+            SendSnackbar($"Ключ P: {P} и Q: {Q} установлены.");
+        }
+
+        public async void ExecuteRunDialog(object o)
+        {
+            CloseCurrentDialog();
+            var view = new SampleMessageDialog()
+            {
+                DataContext = new SampleMessageDialogViewModel((MessageDialogProperty) o)
+            };
+            var result = await DialogHost.Show(view, "RootDialog");
+        }
+
+        #endregion
+
 
         private readonly Dictionary<string, string> _errors = new Dictionary<string, string>();
         public string Error { get; }
@@ -66,8 +100,10 @@ namespace Cryptex.ViewModels.RsaDemoViewModels
             {
                 string error = columnName switch
                 {
-                    nameof(P) => new Validation(new NotEmptyFieldValidationRule(P), new NumberValidationRule(P), new PrimeNumberValidationRule(P)).Validate(), 
-                    nameof(Q) => new Validation(new NotEmptyFieldValidationRule(Q), new NumberValidationRule(Q), new PrimeNumberValidationRule(Q)).Validate(),
+                    nameof(P) => new Validation(new NotEmptyFieldValidationRule(P), new NumberValidationRule(P),
+                        new PrimeNumberValidationRule(P)).Validate(),
+                    nameof(Q) => new Validation(new NotEmptyFieldValidationRule(Q), new NumberValidationRule(Q),
+                        new PrimeNumberValidationRule(Q)).Validate(),
                     _ => null
                 };
                 _errors.Remove(columnName);
@@ -76,8 +112,24 @@ namespace Cryptex.ViewModels.RsaDemoViewModels
                 {
                     _errors.Add(columnName, error);
                 }
-                    
+
+                if (P == Q)
+                {
+                    if(!_errors.ContainsKey(nameof(P)))
+                        _errors.Add("P", "Числа не могут быть одинаковыми");
+                    if (!_errors.ContainsKey(nameof(Q)))
+                        _errors.Add("Q", "Числа не могут быть одинаковыми");
+                }
+
+                if (P != Q)
+                {
+                    if (_errors.ContainsKey(nameof(P)) && _errors[nameof(P)] == "Числа не могут быть одинаковыми")
+                        _errors.Remove("P");
+                    if (_errors.ContainsKey(nameof(Q)) && _errors[nameof(Q)] == "Числа не могут быть одинаковыми")
+                        _errors.Remove("Q");
+                }
                 OnPropertyChanged(nameof(ButtonIsEnabled));
+                OnPropertyChanged(nameof(SetupButtonIsEnabled));
                 return error;
             }
         }

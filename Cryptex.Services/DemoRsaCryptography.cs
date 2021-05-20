@@ -11,19 +11,21 @@ namespace Cryptex.Services
     public class DemoRsaCryptography : IDemoRsaCryptography
     {
         private readonly IPrimeNumbersWorker _primeNumbersWorker;
-        
-        public DemoRsaCryptography(IPrimeNumbersWorker primeNumbersWorker)
+        private readonly IGcdNumbersWorker _gcdNumbersWorker;
+        public DemoRsaCryptography(IPrimeNumbersWorker primeNumbersWorker, IGcdNumbersWorker gcdNumbersWorker)
         {
             _primeNumbersWorker = primeNumbersWorker;
+            _gcdNumbersWorker = gcdNumbersWorker;
         }
 
-        public ulong P { get; private set; }
-        public ulong Q { get; private set; }
-        public ulong N { get; private set; }
-        public ulong D { get; private set; }
+        public long P { get; private set; }
+        public long Q { get; private set; }
+        public long N { get; private set; }
+        public long Fi { get; private set; }
+        public long D { get; private set; }
         public uint E { get; private set; }
 
-        public async Task PSet(ulong p)
+        public async Task PSet(long p)
         {
             bool isPrime = await Task.Run(() => _primeNumbersWorker.IsPrime(p));
             if (!isPrime)
@@ -32,7 +34,7 @@ namespace Cryptex.Services
             }
             P = p;
         }
-        public async Task QSet(ulong q)
+        public async Task QSet(long q)
         {
             bool isPrime = await Task.Run(() => _primeNumbersWorker.IsPrime(q));
             if (!isPrime)
@@ -45,16 +47,41 @@ namespace Cryptex.Services
         {
             N = await Task.Run(() => P * Q);
         }
+        public async Task FiSet()
+        {
+            Fi = await Task.Run(() => (P - 1) * (Q - 1));
+        }
+        public async Task ESet()
+        {
+            E = await Task.Run(() => _primeNumbersWorker
+                .GetPrimesFromFile(2000)
+                .AsParallel()
+                .First(primeNum => _primeNumbersWorker.IsCoprime((long)primeNum, Fi)));
+        }
+
         public async Task DSet()
         {
-            D = await Task.Run(() => (P - 1) * (Q - 1));
+            D = await Task.Run(() =>
+            {
+                long fi = (long)Fi;
+                long tempD = 3;
+                for (; tempD < fi - 1; tempD++)
+                {
+                    if ((tempD * E) % fi == 1)
+                    {
+                        return tempD;
+                    }
+                }
+                return tempD;
+            });
         }
-        public void ESet()
+
+        public async Task Calculate()
         {
-            E = _primeNumbersWorker
-                .GetPrimesFromFile((int)D - 1)
-                .AsParallel()
-                .First(primeNum => _primeNumbersWorker.IsCoprime((ulong)primeNum, D));
+            await NSet();
+            await FiSet();
+            await ESet();
+            await DSet();
         }
 
         public async Task<List<string>> Encrypt(string plainText)
@@ -63,16 +90,10 @@ namespace Cryptex.Services
 
             BigInteger bi;
 
-            for (int i = 0; i < plainText.Length; i++)
+            foreach (int index in plainText)
             {
-                int index = plainText[i];
-
                 bi = new BigInteger(index);
-                bi = await Task.Run(() => BigInteger.Pow(bi, (int) E));
-
-                BigInteger n = new BigInteger((int) N);
-
-                bi = bi % n;
+                bi = await Task.Run(() => bi.PowAndMod(E, N));
 
                 result.Add(bi.ToString());
             }
@@ -80,7 +101,7 @@ namespace Cryptex.Services
             return result;
         }
 
-        public async Task<string> Decrypt(List<string> input, int d, int n)
+        public async Task<string> Decrypt(List<string> input, long d, long n)
         {
             string result = "";
 
@@ -90,12 +111,8 @@ namespace Cryptex.Services
             {
                 if (item.Trim() == "")
                     continue;
-                bi = new BigInteger(Convert.ToInt64(item, 16));
-                bi = await Task.Run(() => BigInteger.Pow(bi, (int)d));
-
-                BigInteger n_ = new BigInteger((int)n);
-
-                bi = bi % n_;
+                bi = new BigInteger(Convert.ToInt64(item));
+                bi = await Task.Run(() => bi.PowAndMod(d, n));
 
                 int index = Convert.ToInt32(bi.ToString());
 

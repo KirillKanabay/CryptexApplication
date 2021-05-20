@@ -5,17 +5,20 @@ namespace Cryptex.Services
 {
     public interface IDemoRsaCryptography
     {
-        ulong P { get; }
-        ulong Q { get; }
-        ulong N { get; }
-        ulong D { get; }
+        long P { get; }
+        long Q { get; }
+        long N { get; }
+        long Fi { get; }
+        long D { get; }
         uint E { get; }
-        Task PSet(ulong p);
-        Task QSet(ulong q);
+        Task PSet(long p);
+        Task QSet(long q);
         Task NSet();
         Task DSet();
-        void ESet();
+        Task FiSet();
+        Task ESet();
+        Task Calculate();
         Task<List<string>> Encrypt(string plainText);
-        Task<string> Decrypt(List<string> input, int d, int n);
+        Task<string> Decrypt(List<string> input, long d, long n);
     }
 }

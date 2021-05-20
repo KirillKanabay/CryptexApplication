@@ -16,8 +16,10 @@ namespace Cryptex.Validators
 
         public string Validate()
         {
-            PrimeNumbersWorker pnw = new PrimeNumbersWorker();
-            if(ulong.TryParse((string) Value, out ulong num))
+            IGcdNumbersWorker gcd = new GcdNumbersWorker();
+            IPrimeNumbersWorker pnw = new PrimeNumbersWorker(gcd);
+
+            if(long.TryParse((string) Value, out long num))
             {
                 return pnw.IsPrime(num) && num >= 3 ? string.Empty : "Число не является простым";
             }

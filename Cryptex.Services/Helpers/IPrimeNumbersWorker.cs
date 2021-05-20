@@ -5,8 +5,8 @@ namespace Cryptex.Services.Helpers
 {
     public interface IPrimeNumbersWorker
     {
-        bool IsPrime(ulong num);
-        bool IsCoprime(ulong num1, ulong num2);
+        bool IsPrime(long num);
+        bool IsCoprime(long num1, long num2);
         List<int> GetPrimes(int maxRange);
         List<uint> GetPrimesFromFile(int maxRange);
     }

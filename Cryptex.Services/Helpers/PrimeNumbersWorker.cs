@@ -10,9 +10,14 @@ namespace Cryptex.Services.Helpers
 {
     public class PrimeNumbersWorker : IPrimeNumbersWorker
     {
-        public bool IsPrime(ulong num)
+        private readonly IGcdNumbersWorker _gcdNumbersWorker;
+        public PrimeNumbersWorker(IGcdNumbersWorker gcdNumbersWorker)
         {
-            for (ulong i = 2; i <= (ulong)Math.Sqrt(num); i++)
+            _gcdNumbersWorker = gcdNumbersWorker;
+        }
+        public bool IsPrime(long num)
+        {
+            for (long i = 2; i <= (long)Math.Sqrt(num); i++)
             {
                 if (num % i == 0)
                     return false;
@@ -21,23 +26,9 @@ namespace Cryptex.Services.Helpers
             return true;
         }
 
-        public bool IsCoprime(ulong num1, ulong num2)
+        public bool IsCoprime(long num1, long num2)
         {
-            if (num1 == num2)
-            {
-                return num1 == 1;
-            }
-            else
-            {
-                if (num1 > num2)
-                {
-                    return IsCoprime(num1 - num2, num2);
-                }
-                else
-                {
-                    return IsCoprime(num2 - num1, num1);
-                }
-            }
+            return _gcdNumbersWorker.Gcd((long)num1, (long)num2) == 1;
         }
 
         /// <summary>
@@ -70,6 +61,10 @@ namespace Cryptex.Services.Helpers
                 primes = (List<uint>)bf.Deserialize(stream);
             }
 
+            if (maxRange > primes.Count)
+            {
+                maxRange = primes.Count;
+            }
             return primes.Take(maxRange).ToList();
         }
     }

@@ -18,10 +18,11 @@ namespace Cryptex.Tests
         [TestCase(5u)]
         [TestCase(13u)]
         [TestCase(31u)]
-        public async Task CheckSetP(ulong p)
+        public async Task CheckSetP(long p)
         {
-            IPrimeNumbersWorker pnw = new PrimeNumbersWorker();
-            var drc = new DemoRsaCryptography(pnw);
+            IGcdNumbersWorker gcd = new GcdNumbersWorker();
+            IPrimeNumbersWorker pnw = new PrimeNumbersWorker(gcd);
+            DemoRsaCryptography drc = new DemoRsaCryptography(pnw, gcd);
 
             await drc.PSet(p);
 
@@ -34,10 +35,11 @@ namespace Cryptex.Tests
         [TestCase(5u)]
         [TestCase(13u)]
         [TestCase(31u)]
-        public async Task CheckSetQ(ulong q)
+        public async Task CheckSetQ(long q)
         {
-            IPrimeNumbersWorker pnw = new PrimeNumbersWorker();
-            DemoRsaCryptography drc = new DemoRsaCryptography(pnw);
+            IGcdNumbersWorker gcd = new GcdNumbersWorker();
+            IPrimeNumbersWorker pnw = new PrimeNumbersWorker(gcd);
+            DemoRsaCryptography drc = new DemoRsaCryptography(pnw, gcd);
 
             await drc.QSet(q);
 
@@ -50,10 +52,11 @@ namespace Cryptex.Tests
         [TestCase(8u)]
         [TestCase(24u)]
         [TestCase(32u)]
-        public void CheckSetP_throwArgumentException(ulong p)
+        public void CheckSetP_throwArgumentException(long p)
         {
-            IPrimeNumbersWorker pnw = new PrimeNumbersWorker();
-            DemoRsaCryptography drc = new DemoRsaCryptography(pnw);
+            IGcdNumbersWorker gcd = new GcdNumbersWorker();
+            IPrimeNumbersWorker pnw = new PrimeNumbersWorker(gcd);
+            DemoRsaCryptography drc = new DemoRsaCryptography(pnw, gcd);
 
             Assert.ThrowsAsync(typeof(ArgumentException), async () => await drc.PSet(p));
         }
@@ -64,18 +67,21 @@ namespace Cryptex.Tests
         [TestCase(8u)]
         [TestCase(24u)]
         [TestCase(32u)]
-        public void CheckSetQ_throwArgumentException(ulong q)
+        public void CheckSetQ_throwArgumentException(long q)
         {
-            IPrimeNumbersWorker pnw = new PrimeNumbersWorker();
-            DemoRsaCryptography drc = new DemoRsaCryptography(pnw);
-            
+            IGcdNumbersWorker gcd = new GcdNumbersWorker();
+            IPrimeNumbersWorker pnw = new PrimeNumbersWorker(gcd);
+            DemoRsaCryptography drc = new DemoRsaCryptography(pnw, gcd);
+
             Assert.ThrowsAsync(typeof(ArgumentException), async () => await drc.QSet(q));
         }
         [Test]
         public async Task CheckSetN()
         {
-            IPrimeNumbersWorker pnw = new PrimeNumbersWorker();
-            DemoRsaCryptography drc = new DemoRsaCryptography(pnw);
+            IGcdNumbersWorker gcd = new GcdNumbersWorker();
+            IPrimeNumbersWorker pnw = new PrimeNumbersWorker(gcd);
+            DemoRsaCryptography drc = new DemoRsaCryptography(pnw, gcd);
+
             await drc.PSet(3);
             await drc.QSet(7);
 
@@ -87,28 +93,46 @@ namespace Cryptex.Tests
         [Test]
         public async Task CheckSetD()
         {
-            IPrimeNumbersWorker pnw = new PrimeNumbersWorker();
-            DemoRsaCryptography drc = new DemoRsaCryptography(pnw);
-            await drc.PSet(3);
-            await drc.QSet(7);
+            IGcdNumbersWorker gcd = new GcdNumbersWorker();
+            IPrimeNumbersWorker pnw = new PrimeNumbersWorker(gcd);
+            DemoRsaCryptography drc = new DemoRsaCryptography(pnw, gcd);
 
-            await drc.DSet();
+            await drc.PSet(3557);
+            await drc.QSet(2579);
+            await drc.Calculate();
 
-            Assert.AreEqual(12, drc.D);
+            Assert.AreEqual(6111579, drc.D);
         }
 
         [Test]
         public async Task CheckSetE()
         {
-            IPrimeNumbersWorker pnw = new PrimeNumbersWorker();
-            DemoRsaCryptography drc = new DemoRsaCryptography(pnw);
+            IGcdNumbersWorker gcd = new GcdNumbersWorker();
+            IPrimeNumbersWorker pnw = new PrimeNumbersWorker(gcd);
+            DemoRsaCryptography drc = new DemoRsaCryptography(pnw, gcd);
+
             await drc.PSet(3);
             await drc.QSet(7);
-            await drc.DSet();
-
-            drc.ESet();
+            await drc.Calculate();
 
             Assert.AreEqual(5, drc.E);
+        }
+
+        [Test]
+        public async Task EncryptDecryptTest()
+        {
+            IGcdNumbersWorker gcd = new GcdNumbersWorker();
+            IPrimeNumbersWorker pnw = new PrimeNumbersWorker(gcd);
+            DemoRsaCryptography drc = new DemoRsaCryptography(pnw, gcd);
+
+            await drc.PSet(3557);
+            await drc.QSet(2579);
+            await drc.Calculate();
+
+            var encryptedMessage = await drc.Encrypt("111111");
+            var decryptedMessage = await drc.Decrypt(encryptedMessage, drc.D, drc.N);
+
+            Assert.AreEqual("111111", decryptedMessage);
         }
     }
 }

@@ -13,7 +13,12 @@
     FontFamily="Google Sans"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <ResourceDictionary Source="../../Styles/TextBoxStyles.xaml" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Styles/TextBoxStyles.xaml" />
+                <ResourceDictionary Source="../../Styles/IconTitleStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
@@ -34,10 +39,44 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40" />
                     <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                    <materialDesign:PackIcon Margin="4" Kind="CogOutline" />
-                    <Label FontSize="14" FontWeight="Medium">Установка значений</Label>
+                <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                    <materialDesign:PackIcon
+                        Margin="0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        Kind="Numeric1CircleOutline"
+                        Style="{StaticResource IconTitle}" />
+                    <Label
+                        Margin="0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        FontSize="14"
+                        FontWeight="Bold">
+                        Установка значений
+                    </Label>
+                </StackPanel>
+                <StackPanel
+                    Grid.Row="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Orientation="Vertical">
+                    <ProgressBar
+                        Margin="12,12,12,12"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        IsIndeterminate="True"
+                        Style="{StaticResource MaterialDesignCircularProgressBar}"
+                        Visibility="{Binding ProgressBarVisibility}"
+                        Value="0" />
+                    <Button
+                        Width="250"
+                        Margin="0,10,0,0"
+                        Command="{Binding Setup}"
+                        Content="Установить"
+                        Cursor="Hand"
+                        IsEnabled="{Binding SetupButtonIsEnabled}" />
                 </StackPanel>
                 <StackPanel Grid.Row="1">
                     <TextBox Margin="0,8,0,15" Style="{StaticResource InputTextBox}">
@@ -80,15 +119,27 @@
                     <RowDefinition Height="40" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                    <materialDesign:PackIcon Margin="4" Kind="InfoCircleOutline" />
-                    <Label FontSize="14" FontWeight="Medium">Справочная информация</Label>
+                <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                    <materialDesign:PackIcon
+                        Margin="0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        Kind="InfoCircleOutline"
+                        Style="{StaticResource IconTitle}" />
+                    <Label
+                        Margin="0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        FontSize="14"
+                        FontWeight="Bold">
+                        Справочная информация
+                    </Label>
                 </StackPanel>
                 <TextBlock
                     Grid.Row="1"
                     FontSize="13"
                     TextWrapping="WrapWithOverflow">
-                    Первым этапом генерации публичного и приватного ключа: является выбор P и Q ключей.
+                    Первым этапом генерации публичного и приватного ключа является: выбор P и Q ключей.
                     P, Q - являются простыми положительными числами (P &gt;= 3 и Q &gt;=3),
                     при этом они не могут быть одинаковыми
                 </TextBlock>
