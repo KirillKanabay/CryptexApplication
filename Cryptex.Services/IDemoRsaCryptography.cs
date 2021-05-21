@@ -13,6 +13,8 @@ namespace Cryptex.Services
         uint E { get; }
         Task PSet(long p);
         Task QSet(long q);
+        Task GenerateP();
+        Task GenerateQ();
         Task NSet();
         Task DSet();
         Task FiSet();

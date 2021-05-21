@@ -1,35 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cryptex.Services;
+using Microsoft.VisualBasic;
 
 namespace Cryptex.Models
 {
     public class RsaDemoModel
     {
-        public readonly IDemoRsaCryptography DemoRsa;
+        private readonly IDemoRsaCryptography _demoRsa;
+        private List<string> _encryptedMessage;
 
         public RsaDemoModel(IDemoRsaCryptography demoRsa)
         {
-            DemoRsa = demoRsa;
+            _demoRsa = demoRsa;
         }
 
-        public long D => DemoRsa.D;
-        public long E => DemoRsa.E;
-        public long N => DemoRsa.N;
-        public long Fi => DemoRsa.Fi;
+        public long P => _demoRsa.P;
+        public long Q => _demoRsa.Q;
+        public long D => _demoRsa.D;
+        public long E => _demoRsa.E;
+        public long N => _demoRsa.N;
+        public long Fi => _demoRsa.Fi;
+        public string EncryptedMessage => string.Concat(_encryptedMessage);
+        public string PlainText { get; private set; }
+
+        public async Task GenerateP() => await _demoRsa.GenerateP();
+        public async Task GenerateQ() => await _demoRsa.GenerateQ();
 
         public async Task SetP(long p)
         {
-            await DemoRsa.PSet(p);
+            await _demoRsa.PSet(p);
         }
 
         public async Task SetQ(long q)
         {
-            await DemoRsa.QSet(q);
+            await _demoRsa.QSet(q);
         }
 
-        public async Task Calculate() => await DemoRsa.Calculate();
+        public async Task Calculate() => await _demoRsa.Calculate();
+
+        public async Task<string> Encrypt(string plainText)
+        {
+            PlainText = plainText;
+            _encryptedMessage = await _demoRsa.Encrypt(plainText);
+            return string.Concat(_encryptedMessage);
+        }
+
+        public async Task<string> Decrypt()
+        {
+            return await _demoRsa.Decrypt(_encryptedMessage, D, N);
+        }
     }
 }

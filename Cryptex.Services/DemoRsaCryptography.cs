@@ -12,10 +12,12 @@ namespace Cryptex.Services
     {
         private readonly IPrimeNumbersWorker _primeNumbersWorker;
         private readonly IGcdNumbersWorker _gcdNumbersWorker;
+        private readonly List<uint> _generatedPrimeNumbers;
         public DemoRsaCryptography(IPrimeNumbersWorker primeNumbersWorker, IGcdNumbersWorker gcdNumbersWorker)
         {
             _primeNumbersWorker = primeNumbersWorker;
             _gcdNumbersWorker = gcdNumbersWorker;
+            _generatedPrimeNumbers = _primeNumbersWorker.GetPrimesFromFile(25000);
         }
 
         public long P { get; private set; }
@@ -24,6 +26,16 @@ namespace Cryptex.Services
         public long Fi { get; private set; }
         public long D { get; private set; }
         public uint E { get; private set; }
+
+        public async Task GenerateP()
+        {
+            P = await Task.Run(() => _generatedPrimeNumbers[new Random().Next(300, 2000)]);
+        }
+
+        public async Task GenerateQ()
+        {
+            Q = await Task.Run(() => _generatedPrimeNumbers[new Random().Next(300, 2000)]);
+        }
 
         public async Task PSet(long p)
         {
@@ -53,12 +65,12 @@ namespace Cryptex.Services
         }
         public async Task ESet()
         {
-            E = await Task.Run(() => _primeNumbersWorker
-                .GetPrimesFromFile(2000)
+            E = await Task.Run(() => 
+                _generatedPrimeNumbers
+                    .Take(2000)
                 .AsParallel()
                 .First(primeNum => _primeNumbersWorker.IsCoprime((long)primeNum, Fi)));
         }
-
         public async Task DSet()
         {
             D = await Task.Run(() =>
@@ -86,38 +98,28 @@ namespace Cryptex.Services
 
         public async Task<List<string>> Encrypt(string plainText)
         {
-            List<string> result = new List<string>();
-
-            BigInteger bi;
-
-            foreach (int index in plainText)
-            {
-                bi = new BigInteger(index);
-                bi = await Task.Run(() => bi.PowAndMod(E, N));
-
-                result.Add(bi.ToString());
-            }
+            List<string> result = await Task.Run(()=> 
+                plainText
+                         .Select(index => new BigInteger(index)
+                         .PowAndMod(E, N)
+                         .ToString("X"))
+                         .ToList());
 
             return result;
         }
 
         public async Task<string> Decrypt(List<string> input, long d, long n)
         {
-            string result = "";
-
-            BigInteger bi;
-
-            foreach (string item in input)
-            {
-                if (item.Trim() == "")
-                    continue;
-                bi = new BigInteger(Convert.ToInt64(item));
-                bi = await Task.Run(() => bi.PowAndMod(d, n));
-
-                int index = Convert.ToInt32(bi.ToString());
-
-                result += (char)index;
-            }
+            string result = await Task.Run(() =>
+                {
+                    return string.Concat(
+                        input
+                             .Where(i => i.Trim() != "") //Отсеиваем пустые строки
+                             .Select(i => (char) 
+                                 Convert.ToInt32(new BigInteger(Convert.ToInt32(i, 16)) //Переводим в 16-ую СС
+                                .PowAndMod(d, n) //Расшифровываем
+                                .ToString())));
+                });
 
             return result;
         }

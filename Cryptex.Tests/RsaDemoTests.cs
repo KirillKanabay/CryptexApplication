@@ -129,10 +129,10 @@ namespace Cryptex.Tests
             await drc.QSet(2579);
             await drc.Calculate();
 
-            var encryptedMessage = await drc.Encrypt("111111");
+            var encryptedMessage = await drc.Encrypt("Кирилл");
             var decryptedMessage = await drc.Decrypt(encryptedMessage, drc.D, drc.N);
 
-            Assert.AreEqual("111111", decryptedMessage);
+            Assert.AreEqual("Кирилл", decryptedMessage);
         }
     }
 }

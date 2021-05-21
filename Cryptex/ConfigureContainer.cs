@@ -27,12 +27,12 @@ namespace Cryptex
 
             #region RSA Demo
 
-            builder.RegisterType<RsaDemoViewModel>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<StepperRsaInfoViewModel>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<StepperRsaSetPQViewModel>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<StepperRsaCalculateViewModel>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<StepperRsaEncryptViewModel>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<StepperRsaDecryptViewModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<RsaDemoViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<StepperRsaInfoViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<StepperRsaSetPQViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<StepperRsaCalculateViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<StepperRsaEncryptViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<StepperRsaDecryptViewModel>().AsSelf().InstancePerDependency();
 
             #endregion
 

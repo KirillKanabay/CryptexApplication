@@ -27,6 +27,7 @@
         <mde:Stepper
             Grid.Row="1"
             BlockNavigationOnValidationErrors="True"
+            CancelNavigationCommand="Close"
             IsLinear="True"
             Layout="Horizontal"
             Steps="{Binding Path=Steps, Mode=OneTime}" />

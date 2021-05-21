@@ -62,6 +62,24 @@ namespace Cryptex.ViewModels.RsaDemoViewModels
         public AsyncRelayCommand Setup => new AsyncRelayCommand(SetupMethod,
             (ex) => { ExecuteRunDialog(new MessageDialogProperty() {Title = "Ошибка", Message = ex.Message}); });
 
+        public AsyncRelayCommand GenerateP => new AsyncRelayCommand(GeneratePMethod,
+            (ex) => { ExecuteRunDialog(new MessageDialogProperty() { Title = "Ошибка", Message = ex.Message }); });
+
+        public AsyncRelayCommand GenerateQ => new AsyncRelayCommand(GenerateQMethod,
+            (ex) => { ExecuteRunDialog(new MessageDialogProperty() { Title = "Ошибка", Message = ex.Message }); });
+
+        private async Task GeneratePMethod(object arg)
+        {
+            await _rsaDemoModel.GenerateP();
+            P = _rsaDemoModel.P.ToString();
+        }
+
+        private async Task GenerateQMethod(object arg)
+        {
+            await _rsaDemoModel.GenerateQ();
+            Q = _rsaDemoModel.Q.ToString();
+        }
+
         private async Task SetupMethod(object arg)
         {
             ProgressBarVisibility = Visibility.Visible;
@@ -100,9 +118,9 @@ namespace Cryptex.ViewModels.RsaDemoViewModels
             {
                 string error = columnName switch
                 {
-                    nameof(P) => new Validation(new NotEmptyFieldValidationRule(P), new NumberValidationRule(P),
+                    nameof(P) => new Validation(new NotEmptyFieldValidationRule(P), new NumberValidationRule(P), new RangeNumberValidationRule(P, 1000u, 1000000u),
                         new PrimeNumberValidationRule(P)).Validate(),
-                    nameof(Q) => new Validation(new NotEmptyFieldValidationRule(Q), new NumberValidationRule(Q),
+                    nameof(Q) => new Validation(new NotEmptyFieldValidationRule(Q), new NumberValidationRule(Q), new RangeNumberValidationRule(Q, 1000u, 1000000u),
                         new PrimeNumberValidationRule(Q)).Validate(),
                     _ => null
                 };

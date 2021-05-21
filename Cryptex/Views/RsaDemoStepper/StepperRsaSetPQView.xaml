@@ -78,31 +78,79 @@
                         Cursor="Hand"
                         IsEnabled="{Binding SetupButtonIsEnabled}" />
                 </StackPanel>
-                <StackPanel Grid.Row="1">
-                    <TextBox Margin="0,8,0,15" Style="{StaticResource InputTextBox}">
-                        <materialDesign:HintAssist.Hint>
-                            <TextBlock>P</TextBlock>
-                        </materialDesign:HintAssist.Hint>
-                        <TextBox.Text>
-                            <Binding Path="P" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <DataErrorValidationRule />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-                    <TextBox Margin="0,8,0,15" Style="{StaticResource InputTextBox}">
-                        <materialDesign:HintAssist.Hint>
-                            <TextBlock>Q</TextBlock>
-                        </materialDesign:HintAssist.Hint>
-                        <TextBox.Text>
-                            <Binding Path="Q" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <DataErrorValidationRule />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
+                <StackPanel Grid.Row="1" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox
+                            Width="280"
+                            Margin="0,8,0,15"
+                            Style="{StaticResource InputTextBox}">
+                            <materialDesign:HintAssist.Hint>
+                                <TextBlock>Введите P</TextBlock>
+                            </materialDesign:HintAssist.Hint>
+                            <TextBox.Text>
+                                <Binding Path="P" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <Button
+                            Grid.Row="2"
+                            Width="20"
+                            Height="20"
+                            Margin="-20"
+                            Padding="0"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding GenerateP}">
+                            <materialDesign:PackIcon
+                                Width="18"
+                                Height="18"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="#383838"
+                                Kind="DiceMultipleOutline" />
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox
+                            Width="280"
+                            Margin="0,8,0,15"
+                            Style="{StaticResource InputTextBox}">
+                            <materialDesign:HintAssist.Hint>
+                                <TextBlock>Введите Q</TextBlock>
+                            </materialDesign:HintAssist.Hint>
+                            <TextBox.Text>
+                                <Binding Path="Q" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <Button
+                            Grid.Row="2"
+                            Width="20"
+                            Height="20"
+                            Margin="-20"
+                            Padding="0"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding GenerateQ}">
+                            <materialDesign:PackIcon
+                                Width="18"
+                                Height="18"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="#383838"
+                                Kind="DiceMultipleOutline" />
+                        </Button>
+                    </StackPanel>
                 </StackPanel>
             </Grid>
 
@@ -139,9 +187,13 @@
                     Grid.Row="1"
                     FontSize="13"
                     TextWrapping="WrapWithOverflow">
-                    Первым этапом генерации публичного и приватного ключа является: выбор P и Q ключей.
-                    P, Q - являются простыми положительными числами (P &gt;= 3 и Q &gt;=3),
-                    при этом они не могут быть одинаковыми
+                    Первым этапом генерации публичного и приватного ключа является: выбор P и Q ключей.<Italic>P, Q</Italic>
+                    - являются простыми положительными числами<Italic>(P &gt;= 3 и Q &gt;=3)</Italic>
+                    ,
+                    при этом они не могут быть одинаковыми.<LineBreak />
+                    <LineBreak />
+                    <Bold>Для правильной работы алгоритма рекомендуется использовать простые числа &gt; 1000. (Или вы их можете сгенерировать нажав на &quot;кубики&quot;)</Bold>
+
                 </TextBlock>
             </Grid>
         </materialDesign:Card>
