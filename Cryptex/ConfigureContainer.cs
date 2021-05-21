@@ -4,6 +4,7 @@ using Cryptex.Models;
 using Cryptex.Services;
 using Cryptex.Services.Helpers;
 using Cryptex.ViewModels;
+using Cryptex.ViewModels.DhDemoViewModels;
 using Cryptex.ViewModels.RsaDemoViewModels;
 
 namespace Cryptex
@@ -23,8 +24,7 @@ namespace Cryptex
             builder.RegisterType<KeysViewModel>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<SecureFileViewModel>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<SecureMessagesViewModel>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<DiffieHellmanDemoViewModel>().AsSelf().InstancePerLifetimeScope();
-
+            
             #region RSA Demo
 
             builder.RegisterType<RsaDemoViewModel>().AsSelf().InstancePerDependency();
@@ -34,6 +34,16 @@ namespace Cryptex
             builder.RegisterType<StepperRsaEncryptViewModel>().AsSelf().InstancePerDependency();
             builder.RegisterType<StepperRsaDecryptViewModel>().AsSelf().InstancePerDependency();
 
+            #endregion
+
+            #region Diffie-Hellman Demo
+
+            builder.RegisterType<DiffieHellmanDemoViewModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<StepperDhCalculateGeneralKey>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<StepperDhCalculatePublicKeys>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<StepperDhEncryptDecryptViewModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<StepperDhSetPGViewModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<StepperDhSetPrivateKeysViewModel>().AsSelf().InstancePerLifetimeScope();
             #endregion
 
             builder.RegisterType<AboutProgramViewModel>().AsSelf().InstancePerDependency();
@@ -58,6 +68,7 @@ namespace Cryptex
             builder.RegisterType<DemoRsaCryptography>().As<IDemoRsaCryptography>().InstancePerDependency();
             builder.RegisterType<PrimeNumbersWorker>().As<IPrimeNumbersWorker>().InstancePerLifetimeScope();
             builder.RegisterType<GcdNumbersWorker>().As<IGcdNumbersWorker>().InstancePerLifetimeScope();
+            builder.RegisterType<DemoDHCryptography>().As<DemoDHCryptography>().InstancePerLifetimeScope();
         }
 
         private void RegisterModels(ContainerBuilder builder)
