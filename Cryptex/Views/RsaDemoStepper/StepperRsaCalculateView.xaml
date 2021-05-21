@@ -9,7 +9,7 @@
     xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Background="#FFFAFAFA"
+    Background="{x:Null}"
     FontFamily="Google Sans"
     mc:Ignorable="d">
     <UserControl.Resources>
@@ -32,6 +32,7 @@
             Margin="15"
             Padding="10"
             materialDesign:ShadowAssist.ShadowDepth="Depth2"
+            Background="#FAFAFA"
             UniformCornerRadius="5">
             <Grid>
                 <Grid.RowDefinitions>
@@ -75,6 +76,7 @@
             Margin="15"
             Padding="10"
             materialDesign:ShadowAssist.ShadowDepth="Depth2"
+            Background="#FAFAFA"
             UniformCornerRadius="5">
             <Grid>
                 <Grid.RowDefinitions>
@@ -117,6 +119,7 @@
             Margin="15"
             Padding="10"
             materialDesign:ShadowAssist.ShadowDepth="Depth2"
+            Background="#FAFAFA"
             UniformCornerRadius="5">
             <Grid>
                 <Grid.RowDefinitions>
@@ -161,6 +164,7 @@
             Margin="15"
             Padding="10"
             materialDesign:ShadowAssist.ShadowDepth="Depth2"
+            Background="#FAFAFA"
             UniformCornerRadius="5">
             <Grid>
                 <Grid.RowDefinitions>
@@ -203,6 +207,7 @@
             Margin="15"
             Padding="10"
             materialDesign:ShadowAssist.ShadowDepth="Depth2"
+            Background="#FAFAFA"
             UniformCornerRadius="5">
             <Grid>
                 <Grid.RowDefinitions>
@@ -245,6 +250,7 @@
             Margin="15"
             Padding="10"
             materialDesign:ShadowAssist.ShadowDepth="Depth2"
+            Background="#FAFAFA"
             UniformCornerRadius="5">
             <Grid>
                 <Grid.RowDefinitions>

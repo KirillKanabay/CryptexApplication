@@ -1,9 +1,9 @@
 ﻿<UserControl
-    x:Class="Cryptex.Views.RsaDemoStepper.StepperRsaSetPQView"
+    x:Class="Cryptex.Views.DhDemoStepper.StepperDhSetPrivateKeysView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Cryptex.Views.RsaDemoStepper"
+    xmlns:local="clr-namespace:Cryptex.Views.DhDemoStepper"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml"
@@ -24,6 +24,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -38,7 +39,7 @@
             UniformCornerRadius="5">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="40" />
+                    <RowDefinition Height="60" />
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
@@ -47,17 +48,20 @@
                         Margin="0"
                         Padding="0"
                         HorizontalAlignment="Center"
-                        Kind="Numeric1CircleOutline"
+                        Kind="FaceWoman"
                         Style="{StaticResource IconTitle}" />
-                    <Label
+                    <TextBlock
                         Margin="0"
                         Padding="0"
                         HorizontalAlignment="Center"
                         FontSize="14"
-                        FontWeight="Bold">
-                        Установка значений
-                    </Label>
+                        FontWeight="Bold"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap">
+                        Установка секретного ключа Алисы
+                    </TextBlock>
                 </StackPanel>
+
                 <StackPanel
                     Grid.Row="2"
                     HorizontalAlignment="Center"
@@ -72,7 +76,7 @@
                         Visibility="{Binding ProgressBarVisibility}"
                         Value="0" />
                     <Button
-                        Width="250"
+                        Width="150"
                         Margin="0,10,0,0"
                         Command="{Binding Setup}"
                         Content="Установить"
@@ -83,11 +87,11 @@
                 <StackPanel Grid.Row="1" HorizontalAlignment="Center">
                     <StackPanel Orientation="Horizontal">
                         <TextBox
-                            Width="280"
+                            Width="180"
                             Margin="0,8,0,15"
                             Style="{StaticResource InputTextBox}">
                             <materialDesign:HintAssist.Hint>
-                                <TextBlock>Введите P</TextBlock>
+                                <TextBlock>Введите ключ Алисы</TextBlock>
                             </materialDesign:HintAssist.Hint>
                             <TextBox.Text>
                                 <Binding Path="P" UpdateSourceTrigger="PropertyChanged">
@@ -97,61 +101,82 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <Button
-                            Grid.Row="2"
-                            Width="20"
-                            Height="20"
-                            Margin="-20"
-                            Padding="0"
-                            HorizontalContentAlignment="Center"
-                            VerticalContentAlignment="Center"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Command="{Binding GenerateP}">
-                            <materialDesign:PackIcon
-                                Width="18"
-                                Height="18"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Foreground="#383838"
-                                Kind="DiceMultipleOutline" />
-                        </Button>
                     </StackPanel>
+                </StackPanel>
+            </Grid>
+
+        </materialDesign:Card>
+        <materialDesign:Card
+            Grid.Column="1"
+            Margin="15"
+            Padding="10"
+            materialDesign:ShadowAssist.ShadowDepth="Depth2"
+            Background="#FAFAFA"
+            UniformCornerRadius="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60" />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                    <materialDesign:PackIcon
+                        Margin="0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        Kind="FaceMan"
+                        Style="{StaticResource IconTitle}" />
+                    <TextBlock
+                        Margin="0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap">
+                        Установка секретного ключа Боба
+                    </TextBlock>
+                </StackPanel>
+
+                <StackPanel
+                    Grid.Row="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Orientation="Vertical">
+                    <ProgressBar
+                        Margin="12,12,12,12"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        IsIndeterminate="True"
+                        Style="{StaticResource MaterialDesignCircularProgressBar}"
+                        Visibility="{Binding ProgressBarVisibility}"
+                        Value="0" />
+                    <Button
+                        Width="150"
+                        Margin="0,10,0,0"
+                        Command="{Binding Setup}"
+                        Content="Установить"
+                        Cursor="Hand"
+                        IsEnabled="{Binding SetupButtonIsEnabled}"
+                        Style="{StaticResource MaterialDesignOutlinedButton}" />
+                </StackPanel>
+                <StackPanel Grid.Row="1" HorizontalAlignment="Center">
                     <StackPanel Orientation="Horizontal">
                         <TextBox
-                            Width="280"
+                            Width="180"
                             Margin="0,8,0,15"
                             Style="{StaticResource InputTextBox}">
                             <materialDesign:HintAssist.Hint>
-                                <TextBlock>Введите Q</TextBlock>
+                                <TextBlock>Введите ключ Боба</TextBlock>
                             </materialDesign:HintAssist.Hint>
                             <TextBox.Text>
-                                <Binding Path="Q" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="P" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <DataErrorValidationRule />
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <Button
-                            Grid.Row="2"
-                            Width="20"
-                            Height="20"
-                            Margin="-20"
-                            Padding="0"
-                            HorizontalContentAlignment="Center"
-                            VerticalContentAlignment="Center"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Command="{Binding GenerateQ}">
-                            <materialDesign:PackIcon
-                                Width="18"
-                                Height="18"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Foreground="#383838"
-                                Kind="DiceMultipleOutline" />
-                        </Button>
                     </StackPanel>
                 </StackPanel>
             </Grid>
@@ -159,7 +184,7 @@
         </materialDesign:Card>
         <materialDesign:Card
             Grid.Row="0"
-            Grid.Column="1"
+            Grid.Column="2"
             Margin="15"
             Padding="10"
             materialDesign:ShadowAssist.ShadowDepth="Depth2"
@@ -190,21 +215,18 @@
                     Grid.Row="1"
                     FontSize="13"
                     TextWrapping="WrapWithOverflow">
-                    Первым этапом генерации публичного и приватного ключа является: выбор P и Q ключей.<Italic>P, Q</Italic>
-                    - являются простыми положительными числами<Italic>(P &gt;= 3 и Q &gt;=3)</Italic>
-                    ,
-                    при этом они не могут быть одинаковыми.<LineBreak />
-                    <LineBreak />
-                    <Bold>Для правильной работы алгоритма рекомендуется использовать простые числа &gt; 1000. (Или вы их можете сгенерировать нажав на &quot;кубики&quot;)</Bold>
-
+                    Для того, чтобы создать неизвестный более никому секретный ключ,
+                    оба абонента генерируют случайные числа: Алиса — число a
+                    , Боб — число b.
                 </TextBlock>
             </Grid>
         </materialDesign:Card>
         <mde:StepButtonBar
             Grid.Row="1"
-            Grid.Column="1"
+            Grid.Column="2"
             Margin="0"
             HorizontalAlignment="Right"
+            Back="Назад"
             Continue="Продолжить"
             IsContinueEnabled="{Binding ButtonIsEnabled}" />
     </Grid>

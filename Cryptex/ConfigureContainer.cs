@@ -39,8 +39,8 @@ namespace Cryptex
             #region Diffie-Hellman Demo
 
             builder.RegisterType<DiffieHellmanDemoViewModel>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<StepperDhCalculateGeneralKey>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<StepperDhCalculatePublicKeys>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<StepperDhCalculateGeneralKeyViewModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<StepperDhCalculatePublicKeysViewModel>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<StepperDhEncryptDecryptViewModel>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<StepperDhSetPGViewModel>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<StepperDhSetPrivateKeysViewModel>().AsSelf().InstancePerLifetimeScope();

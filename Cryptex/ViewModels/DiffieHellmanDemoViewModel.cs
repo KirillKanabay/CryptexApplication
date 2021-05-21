@@ -6,8 +6,8 @@ namespace Cryptex.ViewModels
 {
     class DiffieHellmanDemoViewModel:BaseViewModel
     {
-        private readonly StepperDhCalculateGeneralKey _stepperDhCalculateGeneralKey;
-        private readonly StepperDhCalculatePublicKeys _stepperDhCalculatePublicKeys;
+        private readonly StepperDhCalculateGeneralKeyViewModel _stepperDhCalculateGeneralKey;
+        private readonly StepperDhCalculatePublicKeysViewModel _stepperDhCalculatePublicKeys;
         private readonly StepperDhSetPrivateKeysViewModel _stepperDhSetPrivateKeys;
         private readonly StepperDhSetPGViewModel _stepperDhSetPgViewModel;
         private readonly StepperDhEncryptDecryptViewModel _stepperDhEncryptDecryptViewModel;

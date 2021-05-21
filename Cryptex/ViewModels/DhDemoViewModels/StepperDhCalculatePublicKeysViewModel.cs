@@ -1,7 +1,7 @@
 ﻿
 namespace Cryptex.ViewModels.DhDemoViewModels
 {
-    class StepperDhCalculatePublicKeys:BaseViewModel
+    class StepperDhCalculatePublicKeysViewModel:BaseViewModel
     {
     }
 }

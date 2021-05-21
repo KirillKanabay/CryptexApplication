@@ -1,0 +1,132 @@
+﻿<UserControl
+    x:Class="Cryptex.Views.DhDemoStepper.StepperDhCalculatePublicKeysView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Cryptex.Views.DhDemoStepper"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml"
+    d:DesignHeight="450"
+    d:DesignWidth="700"
+    Background="{x:Null}"
+    FontFamily="Google Sans"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Styles/TextBoxStyles.xaml" />
+                <ResourceDictionary Source="../../Styles/IconTitleStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <materialDesign:Card
+            Grid.Column="0"
+            Margin="15"
+            Padding="10"
+            materialDesign:ShadowAssist.ShadowDepth="Depth2"
+            Background="#FAFAFA"
+            UniformCornerRadius="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60" />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                    <materialDesign:PackIcon
+                        Margin="0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        Kind="FaceWoman"
+                        Style="{StaticResource IconTitle}" />
+                    <TextBlock
+                        Margin="0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap">
+                        Расчет публичного ключа Алисы
+                    </TextBlock>
+                </StackPanel>
+                <TextBlock Grid.Row="1" FontSize="13">
+                    Алиса вычисляет остаток от деления:<LineBreak />
+                    <Bold>A = g^a mod p</Bold><LineBreak />
+                    <LineBreak />
+                    и пересылает свой публичный ключ Бобу:</TextBlock>
+                <TextBlock
+                    Grid.Row="1"
+                    FontSize="14"
+                    FontWeight="Bold"
+                    Text="{Binding StringFormat=A\={0}, Path=PublicA}" />
+            </Grid>
+
+        </materialDesign:Card>
+        <materialDesign:Card
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="15"
+            Padding="10"
+            materialDesign:ShadowAssist.ShadowDepth="Depth2"
+            Background="#FAFAFA"
+            UniformCornerRadius="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60" />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                    <materialDesign:PackIcon
+                        Margin="0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        Kind="FaceMan"
+                        Style="{StaticResource IconTitle}" />
+                    <TextBlock
+                        Margin="0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap">
+                        Расчет публичного ключа Боба
+                    </TextBlock>
+                </StackPanel>
+                <TextBlock Grid.Row="1" FontSize="13">
+                    Боб вычисляет остаток от деления:<LineBreak />
+                    <Bold>B = g^b mod p</Bold><LineBreak />
+                    <LineBreak />
+                    и пересылает свой публичный ключ Алисе:</TextBlock>
+                <TextBlock
+                    Grid.Row="1"
+                    FontSize="14"
+                    FontWeight="Bold"
+                    Text="{Binding StringFormat=B\={0}, Path=PublicB}" />
+            </Grid>
+
+        </materialDesign:Card>
+
+        <mde:StepButtonBar
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="0"
+            HorizontalAlignment="Right"
+            Back="Назад"
+            Continue="Продолжить"
+            IsContinueEnabled="{Binding ButtonIsEnabled}" />
+    </Grid>
+</UserControl>
+
