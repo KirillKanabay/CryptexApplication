@@ -1,4 +1,4 @@
-﻿namespace Cryptex.ViewModels
+﻿namespace Cryptex.ViewModels.RsaCryptography
 {
     class SecureFileViewModel:BaseViewModel
     {

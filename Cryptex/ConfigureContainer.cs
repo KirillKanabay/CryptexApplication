@@ -3,8 +3,10 @@ using Autofac;
 using Cryptex.Models;
 using Cryptex.Services;
 using Cryptex.Services.Helpers;
+using Cryptex.Services.RSA;
 using Cryptex.ViewModels;
 using Cryptex.ViewModels.DhDemoViewModels;
+using Cryptex.ViewModels.RsaCryptography;
 using Cryptex.ViewModels.RsaDemoViewModels;
 
 namespace Cryptex
@@ -69,6 +71,7 @@ namespace Cryptex
             builder.RegisterType<PrimeNumbersWorker>().As<IPrimeNumbersWorker>().InstancePerLifetimeScope();
             builder.RegisterType<GcdNumbersWorker>().As<IGcdNumbersWorker>().InstancePerLifetimeScope();
             builder.RegisterType<DemoDHCryptography>().As<DemoDHCryptography>().InstancePerLifetimeScope();
+            builder.RegisterType<RsaKeyFileWorker>().As<IRsaKeyFileWorker>().InstancePerLifetimeScope();
         }
 
         private void RegisterModels(ContainerBuilder builder)

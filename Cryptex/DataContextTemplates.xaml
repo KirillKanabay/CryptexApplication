@@ -4,8 +4,9 @@
     xmlns:rsaDemoStepper="clr-namespace:Cryptex.Views.RsaDemoStepper"
     xmlns:rsaDemoViewModels="clr-namespace:Cryptex.ViewModels.RsaDemoViewModels"
     xmlns:viewModels="clr-namespace:Cryptex.ViewModels"
-    xmlns:views="clr-namespace:Cryptex.Views">
-    <DataTemplate DataType="{x:Type viewModels:KeysViewModel}">
+    xmlns:views="clr-namespace:Cryptex.Views"
+    xmlns:rsaCryptography="clr-namespace:Cryptex.ViewModels.RsaCryptography">
+    <DataTemplate DataType="{x:Type rsaCryptography:KeysViewModel}">
         <views:KeysView />
     </DataTemplate>
     <DataTemplate DataType="{x:Type viewModels:RsaDemoViewModel}">
@@ -35,10 +36,10 @@
     <DataTemplate DataType="{x:Type viewModels:DiffieHellmanDemoViewModel}">
         <views:DiffieHellmanDemoView />
     </DataTemplate>
-    <DataTemplate DataType="{x:Type viewModels:SecureFileViewModel}">
+    <DataTemplate DataType="{x:Type rsaCryptography:SecureFileViewModel}">
         <views:SecureFileView />
     </DataTemplate>
-    <DataTemplate DataType="{x:Type viewModels:SecureMessagesViewModel}">
+    <DataTemplate DataType="{x:Type rsaCryptography:SecureMessagesViewModel}">
         <views:SecureMessagesView />
     </DataTemplate>
     <DataTemplate DataType="{x:Type viewModels:AboutProgramViewModel}">

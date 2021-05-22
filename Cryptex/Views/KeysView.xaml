@@ -3,13 +3,49 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:Cryptex.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Background="#FFFAFAFA"
     FontFamily="Google Sans"
     mc:Ignorable="d">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding GetItemsCollection}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <Style x:Key="TransparentButton" TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Width" Value="Auto" />
+                        <Setter Property="Height" Value="Auto" />
+                        <Setter Property="Padding" Value="5" />
+                        <Setter Property="Foreground" Value="#6C6C6C" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="#CC2a2a2a" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid Margin="10,10,10,30">
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
@@ -23,5 +59,108 @@
             FontWeight="Bold">
             Ключи
         </Label>
+        <materialDesign:Card
+            Grid.Row="1"
+            Padding="20"
+            Background="#FAFAFA"
+            UniformCornerRadius="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition />
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+                <Button
+                    Grid.Row="0"
+                    Width="200"
+                    HorizontalAlignment="Left"
+                    Command="{Binding OpenEditorDialog}"
+                    Content="Добавить ключ"
+                    Cursor="Hand"
+                    Style="{StaticResource MaterialDesignOutlinedButton}" />
+                <Border
+                    Grid.Row="0"
+                    Width="300"
+                    Padding="5,3"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    BorderBrush="#BABABA"
+                    BorderThickness="1,1,1,1"
+                    CornerRadius="3"
+                    ToolTip="Введите название ключа">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button
+                            x:Name="SearchButton"
+                            Width="24"
+                            Height="24"
+                            Command="{Binding SearchCommand}"
+                            CommandParameter="{Binding ElementName=SearchBox, Path=Text}"
+                            Style="{DynamicResource MaterialDesignToolButton}">
+                            <materialDesign:PackIcon Kind="Magnify" Opacity=".56" />
+                        </Button>
+                        <TextBox
+                            x:Name="SearchBox"
+                            Grid.Column="1"
+                            MinWidth="200"
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Center"
+                            materialDesign:HintAssist.Hint="Поиск"
+                            materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                            BorderThickness="0"
+                            Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" />
+                    </Grid>
+                </Border>
+                <DataGrid
+                    Grid.Row="1"
+                    MinWidth="500"
+                    Margin="0,8,0,0"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch"
+                    AutoGenerateColumns="False"
+                    CanUserAddRows="False"
+                    CanUserSortColumns="True"
+                    ColumnWidth="*"
+                    HorizontalScrollBarVisibility="Auto"
+                    ItemsSource="{Binding FilteredCollection}"
+                    VerticalScrollBarVisibility="Visible">
+                    <DataGrid.Columns>
+                        <materialDesign:DataGridTextColumn
+                            Binding="{Binding RsaKey.Name}"
+                            Header="Название"
+                            IsReadOnly="True" />
+                        <!--<materialDesign:DataGridTextColumn
+                            Binding="{Binding RsaKey.PublicKey}"
+                            Header="Открытый ключ"
+                            IsReadOnly="True" />-->
+                        <DataGridTemplateColumn Header="Удалить">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Command="{Binding RemoveCommand}" Style="{StaticResource TransparentButton}">
+                                        <materialDesign:PackIcon
+                                            Width="18"
+                                            Height="18"
+                                            Kind="Trash" />
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <ProgressBar
+                    Grid.Row="1"
+                    Margin="100,25,100,50"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    IsIndeterminate="True"
+                    Style="{StaticResource MaterialDesignCircularProgressBar}"
+                    Visibility="{Binding ProgressBarVisibility}"
+                    Value="0" />
+            </Grid>
+        </materialDesign:Card>
     </Grid>
 </UserControl>

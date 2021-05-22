@@ -1,4 +1,5 @@
 using Cryptex.Services;
+using Cryptex.Services.RSA;
 using NUnit.Framework;
 
 namespace Cryptex.Tests

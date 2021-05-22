@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace Cryptex.Services
+﻿namespace Cryptex.Services.RSA
 {
     interface IRsaCryptography
     {
