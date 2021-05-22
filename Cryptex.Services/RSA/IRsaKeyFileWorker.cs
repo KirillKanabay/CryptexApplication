@@ -8,5 +8,6 @@ namespace Cryptex.Services.RSA
         Task<List<RsaKeyCryptography>> LoadKeys();
         Task Import(string path);
         Task Save(RsaKeyCryptography rkc);
+        Task Delete(RsaKeyCryptography rkc);
     }
 }

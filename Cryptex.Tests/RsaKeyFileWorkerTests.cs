@@ -24,5 +24,19 @@ namespace Cryptex.Tests
 
             Assert.AreEqual(true, keys.Any(c => c.Name == "KirillKey"));
         }
+
+        [Test]
+        public async Task CreateAndDeleteKey()
+        {
+            IRsaKeyFileWorker rsaKeyWorker = new RsaKeyFileWorker();
+            var key = new RsaKeyCryptography(2048, "DeletableKey");
+
+            await rsaKeyWorker.Save(key);
+            await rsaKeyWorker.Delete(key);
+
+            var keys = await rsaKeyWorker.LoadKeys();
+
+            Assert.AreEqual(false, keys.Any(c => c.Name == "DeletableKey"));
+        }
     }
 }

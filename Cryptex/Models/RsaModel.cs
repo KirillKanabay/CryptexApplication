@@ -12,6 +12,8 @@ namespace Cryptex.Models
             _rsaKeyFileWorker = rsaKeyFileWorker;
         }
 
-        public async Task Load() => await _rsaKeyFileWorker.LoadKeys();
+        public async Task LoadAsync() => await _rsaKeyFileWorker.LoadKeys();
+
+        public async Task DeleteAsync() => await _rsaKeyFileWorker.DeleteKey();
     }
 }

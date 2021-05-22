@@ -95,5 +95,18 @@ namespace Cryptex.Services.RSA
                 bf.Serialize(fs, rkc.GetSerializableRsaKeys());
             }
         }
+
+        public async Task Delete(RsaKeyCryptography rkc)
+        {
+            try
+            {
+                File.Delete($"{Dir}\\{rkc.Name}.ck");
+            }
+            catch (Exception)
+            {
+                throw new Exception("Не удалось удалить файл.");
+            }
+           
+        }
     }
 }
