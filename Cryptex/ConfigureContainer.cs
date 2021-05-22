@@ -75,7 +75,9 @@ namespace Cryptex
         private void RegisterServices(ContainerBuilder builder)
         {
             builder.RegisterType<ViewModelContainer>().As<IViewModelContainer>().SingleInstance();
+            
             builder.RegisterType<RsaKeyFileWorker>().As<IRsaKeyFileWorker>().SingleInstance();
+            builder.RegisterType<RsaCryptography>().As<IRsaCryptography>().SingleInstance();
 
             builder.RegisterType<DemoRsaCryptography>().As<IDemoRsaCryptography>().InstancePerDependency();
             builder.RegisterType<PrimeNumbersWorker>().As<IPrimeNumbersWorker>().InstancePerLifetimeScope();

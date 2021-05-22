@@ -22,6 +22,10 @@ namespace Cryptex.ViewModels.RsaCryptography
 
         private bool _plainTextCardIsEnabled;
         private string _plainText;
+        private Visibility _encryptProgressBarVisibility = Visibility.Collapsed;
+
+        private bool _encryptedTextCardIsEnabled;
+        private string _encryptedText;
         #endregion
 
         #region Конструкторы
@@ -55,6 +59,7 @@ namespace Cryptex.ViewModels.RsaCryptography
             }
         }
 
+
         public bool PlainTextCardIsEnabled
         {
             get => _plainTextCardIsEnabled;
@@ -76,7 +81,37 @@ namespace Cryptex.ViewModels.RsaCryptography
             }
         }
 
-        public bool EncryptButtonIsEnabled => PlainText.Trim().Length > 0;
+        public bool EncryptButtonIsEnabled => PlainText?.Trim().Length > 0;
+
+        public Visibility EncryptProgressBarVisibility
+        {
+            get => _encryptProgressBarVisibility;
+            set
+            {
+                _encryptProgressBarVisibility = value;
+                OnPropertyChanged(nameof(EncryptProgressBarVisibility));
+            }
+        }
+
+        public bool EncryptedTextCardIsEnabled
+        {
+            get => _encryptedTextCardIsEnabled;
+            set
+            {
+                _encryptedTextCardIsEnabled = value;
+                OnPropertyChanged(nameof(EncryptedTextCardIsEnabled));
+            }
+        }
+
+        public string EncryptedText
+        {
+            get => _encryptedText;
+            set
+            {
+                _encryptedText = value;
+                OnPropertyChanged(nameof(EncryptedText));
+            }
+        }
         #endregion
 
         #region Команды
@@ -118,9 +153,19 @@ namespace Cryptex.ViewModels.RsaCryptography
             }
         }
 
-        private Task EncryptMethod(object arg)
+        private async Task EncryptMethod(object arg)
         {
-            throw new NotImplementedException();
+            EncryptProgressBarVisibility = Visibility.Visible;
+            EncryptedTextCardIsEnabled = false;
+            try
+            {
+                EncryptedText = await _rsaModel.Encrypt(PlainText, _key);
+                EncryptedTextCardIsEnabled = true;
+            }
+            finally
+            {
+                EncryptProgressBarVisibility = Visibility.Collapsed;
+            }
         }
 
         public async void ExecuteRunDialog(object o)

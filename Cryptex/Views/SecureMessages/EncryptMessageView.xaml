@@ -173,7 +173,7 @@
                         VerticalAlignment="Center"
                         IsIndeterminate="True"
                         Style="{StaticResource MaterialDesignCircularProgressBar}"
-                        Visibility="{Binding ProgressBarVisibility}"
+                        Visibility="{Binding EncryptProgressBarVisibility}"
                         Value="0" />
                 </StackPanel>
                 <TextBox
@@ -181,11 +181,11 @@
                     VerticalAlignment="Stretch"
                     materialDesign:HintAssist.FloatingScale="0.95"
                     materialDesign:HintAssist.Hint="Шифруемое сообщение"
-                    AcceptsReturn="True"
                     BorderBrush="#44383838"
                     FontSize="13"
+                    MaxLength="256"
                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                    Text="{Binding PlainText}"
+                    Text="{Binding PlainText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     TextWrapping="Wrap"
                     VerticalScrollBarVisibility="Auto" />
             </Grid>
@@ -198,7 +198,7 @@
             Padding="10"
             materialDesign:ShadowAssist.ShadowDepth="Depth2"
             Background="#FAFAFA"
-            IsEnabled="False"
+            IsEnabled="{Binding EncryptedTextCardIsEnabled}"
             UniformCornerRadius="5">
             <Grid>
                 <Grid.RowDefinitions>

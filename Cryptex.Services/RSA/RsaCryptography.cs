@@ -5,19 +5,22 @@ namespace Cryptex.Services.RSA
 {
     public class RsaCryptography : IRsaCryptography
     {
-        public string Encrypt(byte[] dataToEncrypt, RSAParameters publicKey)
+        public byte[] Encrypt(byte[] dataToEncrypt, RSAParameters publicKey)
         {
             RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
 
             rsa.ImportParameters(publicKey);
 
-            var encryptedData = rsa.Encrypt(dataToEncrypt, false);
-
+            return rsa.Encrypt(dataToEncrypt, false);
         }
 
-        public string Decrypt(string encryptedText)
+        public byte[] Decrypt(byte[] dataToDecrypt, RSAParameters privateKey)
         {
-            throw new NotImplementedException();
+            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
+
+            rsa.ImportParameters(privateKey);
+
+            return rsa.Decrypt(dataToDecrypt, false);
         }
     }
 }

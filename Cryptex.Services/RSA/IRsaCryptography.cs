@@ -2,9 +2,9 @@
 
 namespace Cryptex.Services.RSA
 {
-    interface IRsaCryptography
+    public interface IRsaCryptography
     {
-        string Encrypt(byte[] dataToEncrypt, RSAParameters publicKey);
-        string Decrypt(byte[] dataToDecrypt, RSAParameters privateKey);
+        byte[] Encrypt(byte[] dataToEncrypt, RSAParameters publicKey);
+        byte[] Decrypt(byte[] dataToDecrypt, RSAParameters privateKey);
     }
 }
