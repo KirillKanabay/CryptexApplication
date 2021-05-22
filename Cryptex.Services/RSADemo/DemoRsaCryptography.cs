@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using Cryptex.Services.Helpers;
 
-namespace Cryptex.Services
+namespace Cryptex.Services.RSA
 {
     public class DemoRsaCryptography : IDemoRsaCryptography
     {

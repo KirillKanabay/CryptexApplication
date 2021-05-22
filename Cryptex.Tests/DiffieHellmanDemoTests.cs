@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Cryptex.Services;
+using Cryptex.Services.DiffieHellman;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 

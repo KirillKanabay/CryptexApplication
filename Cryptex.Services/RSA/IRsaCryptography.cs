@@ -1,8 +1,10 @@
-﻿namespace Cryptex.Services.RSA
+﻿using System.Security.Cryptography;
+
+namespace Cryptex.Services.RSA
 {
     interface IRsaCryptography
     {
-        string Encrypt(string text);
-        string Decrypt(string encryptedText);
+        string Encrypt(byte[] dataToEncrypt, RSAParameters publicKey);
+        string Decrypt(byte[] dataToDecrypt, RSAParameters privateKey);
     }
 }

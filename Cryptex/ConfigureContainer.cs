@@ -3,6 +3,7 @@ using Autofac;
 using Cryptex.Helpers;
 using Cryptex.Models;
 using Cryptex.Services;
+using Cryptex.Services.DiffieHellman;
 using Cryptex.Services.Helpers;
 using Cryptex.Services.RSA;
 using Cryptex.ViewModels;

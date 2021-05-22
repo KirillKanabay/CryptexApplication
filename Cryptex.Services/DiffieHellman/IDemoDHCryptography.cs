@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Cryptex.Services
+namespace Cryptex.Services.DiffieHellman
 {
     public interface IDemoDHCryptography
     {

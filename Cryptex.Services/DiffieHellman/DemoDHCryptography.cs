@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
 using System.Threading.Tasks;
 using Cryptex.Services.Helpers;
 
-namespace Cryptex.Services
+namespace Cryptex.Services.DiffieHellman
 {
     public class DemoDHCryptography : IDemoDHCryptography
     {

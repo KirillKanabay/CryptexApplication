@@ -1,12 +1,18 @@
 ﻿using System;
+using System.Security.Cryptography;
 
 namespace Cryptex.Services.RSA
 {
     public class RsaCryptography : IRsaCryptography
     {
-        public string Encrypt(string text)
+        public string Encrypt(byte[] dataToEncrypt, RSAParameters publicKey)
         {
-            throw new NotImplementedException();
+            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
+
+            rsa.ImportParameters(publicKey);
+
+            var encryptedData = rsa.Encrypt(dataToEncrypt, false);
+
         }
 
         public string Decrypt(string encryptedText)

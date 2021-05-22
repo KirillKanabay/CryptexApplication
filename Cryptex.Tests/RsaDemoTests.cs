@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Cryptex.Services;
 using Cryptex.Services.Helpers;
+using Cryptex.Services.RSA;
 using NUnit.Framework;
 using NUnit.Framework.Internal.Commands;
 
