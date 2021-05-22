@@ -52,7 +52,7 @@
                         FontWeight="Bold"
                         TextAlignment="Center"
                         TextWrapping="Wrap">
-                        Импорт ключа
+                        Импорт публичного ключа
                     </TextBlock>
                 </StackPanel>
 

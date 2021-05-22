@@ -61,7 +61,7 @@ namespace Cryptex.ViewModels.RsaCryptography
             set
             {
                 _plainTextCardIsEnabled = value;
-                OnPropertyChanged(nameof(PlaintTextCardIsEnabled));
+                OnPropertyChanged(nameof(PlainTextCardIsEnabled));
             }
         }
 
