@@ -1,6 +1,7 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Documents;
 using Cryptex.Helpers.Commands;
 using Cryptex.Models;
 using Cryptex.Services.RSA;
@@ -10,26 +11,28 @@ using Microsoft.Win32;
 
 namespace Cryptex.ViewModels.RsaCryptography
 {
-    class EncryptMessageViewModel:BaseViewModel
+    public class DecryptMessageViewModel:BaseViewModel
     {
         #region Поля
 
         private readonly RsaModel _rsaModel;
         private RsaKeyCryptography _key;
-        
-        private Visibility _importProgressBarVisibility = Visibility.Collapsed;
+
+        private List<RsaKeyCryptography> _keysCollection;
+
         private Visibility _keyNameVisibility = Visibility.Collapsed;
 
         private bool _plainTextCardIsEnabled;
         private string _plainText;
-        private Visibility _encryptProgressBarVisibility = Visibility.Collapsed;
 
-        private bool _encryptedTextCardIsEnabled;
+        private Visibility _decryptProgressBarVisibility = Visibility.Collapsed;
+
+        private bool _encryptTextCardIsEnabled;
         private string _encryptedText;
         #endregion
 
         #region Конструкторы
-        public EncryptMessageViewModel(RsaModel rsaModel)
+        public DecryptMessageViewModel(RsaModel rsaModel)
         {
             _rsaModel = rsaModel;
         }
@@ -37,17 +40,39 @@ namespace Cryptex.ViewModels.RsaCryptography
 
         #region Свойства
 
-        public string KeyName => _key?.Name;
-        
-        public Visibility ImportProgressBarVisibility
+        public List<RsaKeyCryptography> KeysCollection
         {
-            get => _importProgressBarVisibility;
+            get => _keysCollection;
             set
             {
-                _importProgressBarVisibility = value;
-                OnPropertyChanged(nameof(ImportProgressBarVisibility));
+                _keysCollection = value;
+                OnPropertyChanged(nameof(KeysCollection));
             }
         }
+
+        private int _selectedKeyIndex;
+
+        public int SelectedKeyIndex
+        {
+            get => _selectedKeyIndex;
+            set
+            {
+                _selectedKeyIndex = value;
+                OnPropertyChanged(nameof(SelectedKeyIndex));
+            }
+        }
+
+        public RsaKeyCryptography SelectedKey
+        {
+            get => _key;
+            set
+            {
+                _key = value;
+                OnPropertyChanged(nameof(SelectedKey));
+                OnPropertyChanged(nameof(KeyName));
+            }
+        }
+        public string KeyName => _key?.Name;
 
         public Visibility KeyNameVisibility
         {
@@ -58,7 +83,6 @@ namespace Cryptex.ViewModels.RsaCryptography
                 OnPropertyChanged(nameof(KeyNameVisibility));
             }
         }
-
 
         public bool PlainTextCardIsEnabled
         {
@@ -77,28 +101,28 @@ namespace Cryptex.ViewModels.RsaCryptography
             {
                 _plainText = value;
                 OnPropertyChanged(nameof(PlainText));
-                OnPropertyChanged(nameof(EncryptButtonIsEnabled));
+                OnPropertyChanged(nameof(DecryptButtonIsEnabled));
             }
         }
 
-        public bool EncryptButtonIsEnabled => PlainText?.Trim().Length > 0;
+        public bool DecryptButtonIsEnabled => EncryptedText?.Trim().Length > 0;
 
-        public Visibility EncryptProgressBarVisibility
+        public Visibility DecryptProgressBarVisibility
         {
-            get => _encryptProgressBarVisibility;
+            get => _decryptProgressBarVisibility;
             set
             {
-                _encryptProgressBarVisibility = value;
-                OnPropertyChanged(nameof(EncryptProgressBarVisibility));
+                _decryptProgressBarVisibility = value;
+                OnPropertyChanged(nameof(DecryptProgressBarVisibility));
             }
         }
 
         public bool EncryptedTextCardIsEnabled
         {
-            get => _encryptedTextCardIsEnabled;
+            get => _encryptTextCardIsEnabled;
             set
             {
-                _encryptedTextCardIsEnabled = value;
+                _encryptTextCardIsEnabled = value;
                 OnPropertyChanged(nameof(EncryptedTextCardIsEnabled));
             }
         }
@@ -110,60 +134,42 @@ namespace Cryptex.ViewModels.RsaCryptography
             {
                 _encryptedText = value;
                 OnPropertyChanged(nameof(EncryptedText));
+                OnPropertyChanged(nameof(DecryptButtonIsEnabled));
             }
         }
         #endregion
 
         #region Команды
 
-        public AsyncRelayCommand ImportKey => new AsyncRelayCommand(ImportKeyMethod,
+        public AsyncRelayCommand LoadedCommand => new AsyncRelayCommand(ImportKeysMethod,
             (ex) => { ExecuteRunDialog(new MessageDialogProperty() { Title = "Ошибка", Message = ex.Message }); });
 
-        public AsyncRelayCommand Encrypt => new AsyncRelayCommand(EncryptMethod,
+        public AsyncRelayCommand Decrypt => new AsyncRelayCommand(DecryptMethod,
             (ex) => { ExecuteRunDialog(new MessageDialogProperty() { Title = "Ошибка", Message = ex.Message }); });
 
         #endregion
 
         #region Методы
 
-        private async Task ImportKeyMethod(object arg)
+        private async Task ImportKeysMethod(object arg)
         {
-            var openFileDialog = new OpenFileDialog {Filter = "RSA ключ (*.ck)|*.ck"};
+            KeysCollection = await _rsaModel.LoadAsync();
+            KeyNameVisibility = Visibility.Visible;
+            EncryptedTextCardIsEnabled = true;
+        }
 
-            if (openFileDialog.ShowDialog() == false)
-                return;
-
+        private async Task DecryptMethod(object arg)
+        {
+            DecryptProgressBarVisibility = Visibility.Visible;
+            PlainTextCardIsEnabled = false;
             try
             {
-                ImportProgressBarVisibility = Visibility.Visible;
-
-                KeyNameVisibility = Visibility.Collapsed;
-                
-                _key = await _rsaModel.ImportKey(openFileDialog.FileName);
-                
-                KeyNameVisibility = Visibility.Visible;
-                OnPropertyChanged(nameof(KeyName));
-
+                PlainText = await _rsaModel.Decrypt(EncryptedText, _key);
                 PlainTextCardIsEnabled = true;
             }
             finally
             {
-                ImportProgressBarVisibility = Visibility.Collapsed;
-            }
-        }
-
-        private async Task EncryptMethod(object arg)
-        {
-            EncryptProgressBarVisibility = Visibility.Visible;
-            EncryptedTextCardIsEnabled = false;
-            try
-            {
-                EncryptedText = await _rsaModel.Encrypt(PlainText, _key);
-                EncryptedTextCardIsEnabled = true;
-            }
-            finally
-            {
-                EncryptProgressBarVisibility = Visibility.Collapsed;
+                DecryptProgressBarVisibility = Visibility.Collapsed;
             }
         }
 

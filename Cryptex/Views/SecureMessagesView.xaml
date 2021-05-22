@@ -29,7 +29,9 @@
             <TabItem DataContext="{Binding EncryptMessageViewModel}" Header="Шифрование сообщения">
                 <secureMessages:EncryptMessageView />
             </TabItem>
-            <TabItem DataContext="{Binding BoatTypeManagementViewModel}" Header="Расшифровка сообщения" />
+            <TabItem DataContext="{Binding DecryptMessageViewModel}" Header="Расшифровка сообщения">
+                <secureMessages:DecryptMessageView />
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>

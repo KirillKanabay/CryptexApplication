@@ -32,6 +32,7 @@ namespace Cryptex
             builder.RegisterType<SecureFileViewModel>().AsSelf().InstancePerDependency();
             builder.RegisterType<SecureMessagesViewModel>().AsSelf().InstancePerDependency();
             builder.RegisterType<EncryptMessageViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<DecryptMessageViewModel>().AsSelf().InstancePerDependency();
 
 
 

@@ -14,5 +14,7 @@ namespace Cryptex.ViewModels.RsaCryptography
         public BaseViewModel EncryptMessageViewModel =>
             _viewModelContainer.GetViewModel<EncryptMessageViewModel>();
 
+        public BaseViewModel DecryptMessageViewModel =>
+            _viewModelContainer.GetViewModel<DecryptMessageViewModel>();
     }
 }
