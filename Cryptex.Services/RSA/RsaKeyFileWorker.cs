@@ -104,7 +104,7 @@ namespace Cryptex.Services.RSA
             }
             catch (Exception)
             {
-                throw new Exception("Не удалось удалить файл.");
+                throw new Exception("Не удалось удалить ключ.");
             }
            
         }
