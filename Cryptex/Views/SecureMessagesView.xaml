@@ -5,6 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Cryptex.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:rsaCryptography="clr-namespace:Cryptex.ViewModels.RsaCryptography"
+    xmlns:secureMessages="clr-namespace:Cryptex.Views.SecureMessages"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Background="#FFFAFAFA"
@@ -23,5 +25,11 @@
             FontWeight="Bold">
             Работа с текстом
         </Label>
+        <TabControl Grid.Row="1" Style="{StaticResource MaterialDesignTabControl}">
+            <TabItem DataContext="{Binding EncryptMessageViewModel}" Header="Шифрование сообщения">
+                <secureMessages:EncryptMessageView />
+            </TabItem>
+            <TabItem DataContext="{Binding BoatTypeManagementViewModel}" Header="Расшифровка сообщения" />
+        </TabControl>
     </Grid>
 </UserControl>

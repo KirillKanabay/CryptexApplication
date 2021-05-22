@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Info\**" />
+    <EmbeddedResource Remove="Info\**" />
+    <None Remove="Info\**" />
+    <Page Remove="Info\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="6.2.0" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.1.0" />
     <PackageReference Include="MaterialDesignColors" Version="2.0.0" />
@@ -17,19 +24,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cryptex.Services\Cryptex.Services.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Info\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Info\rsainfo.rtf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Info\rsainfo.xps">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

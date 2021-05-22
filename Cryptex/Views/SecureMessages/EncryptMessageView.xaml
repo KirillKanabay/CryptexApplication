@@ -1,0 +1,241 @@
+﻿<UserControl
+    x:Class="Cryptex.Views.SecureMessages.EncryptMessageView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Cryptex.Views.SecureMessages"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="1000"
+    FontFamily="Google Sans"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Styles/TextBoxStyles.xaml" />
+                <ResourceDictionary Source="../../Styles/IconTitleStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <materialDesign:Card
+            Grid.Column="0"
+            Margin="15"
+            Padding="10"
+            materialDesign:ShadowAssist.ShadowDepth="Depth2"
+            Background="#FAFAFA"
+            UniformCornerRadius="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="150" />
+                    <RowDefinition Height="150" />
+                </Grid.RowDefinitions>
+                <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                    <materialDesign:PackIcon
+                        Margin="0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        Kind="KeyArrowRight"
+                        Style="{StaticResource IconTitle}" />
+                    <TextBlock
+                        Margin="0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap">
+                        Импорт ключа
+                    </TextBlock>
+                </StackPanel>
+
+                <StackPanel
+                    Grid.Row="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Orientation="Horizontal">
+                    <Button
+                        Width="150"
+                        Margin="0,10,0,0"
+                        Command="{Binding ImportKey}"
+                        Content="Импортировать"
+                        Cursor="Hand"
+                        Style="{StaticResource MaterialDesignOutlinedButton}" />
+                    <ProgressBar
+                        Margin="12,20,12,12"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        IsIndeterminate="True"
+                        Style="{StaticResource MaterialDesignCircularProgressBar}"
+                        Visibility="{Binding ImportProgressBarVisibility}"
+                        Value="0" />
+
+                </StackPanel>
+                <materialDesign:Card
+                    Grid.Row="1"
+                    Margin="15"
+                    Padding="10"
+                    materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                    Background="#FAFAFA"
+                    UniformCornerRadius="5"
+                    Visibility="{Binding KeyNameVisibility}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                            <materialDesign:PackIcon
+                                Margin="0"
+                                Padding="0"
+                                HorizontalAlignment="Center"
+                                Kind="Key"
+                                Style="{StaticResource IconTitle}" />
+                            <Label
+                                Margin="0"
+                                Padding="0"
+                                HorizontalAlignment="Center"
+                                FontSize="14"
+                                FontWeight="Bold">
+                                Выбранный ключ
+                            </Label>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1">
+                            <TextBlock
+                                FontSize="13"
+                                Text="{Binding StringFormat=Название:\ {0}, Path=KeyName}"
+                                TextWrapping="WrapWithOverflow" />
+                            <TextBlock FontSize="13" TextWrapping="WrapWithOverflow">
+                                Тип шифрования: RSA
+                            </TextBlock>
+                        </StackPanel>
+
+                    </Grid>
+                </materialDesign:Card>
+
+            </Grid>
+
+        </materialDesign:Card>
+        <materialDesign:Card
+            Grid.Column="1"
+            Margin="15"
+            Padding="10"
+            materialDesign:ShadowAssist.ShadowDepth="Depth2"
+            Background="#FAFAFA"
+            IsEnabled="{Binding PlainTextCardIsEnabled}"
+            UniformCornerRadius="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60" />
+                    <RowDefinition />
+                    <RowDefinition Height="70" />
+                </Grid.RowDefinitions>
+                <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                    <materialDesign:PackIcon
+                        Margin="0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        Kind="LockOpenVariantOutline"
+                        Style="{StaticResource IconTitle}" />
+                    <Label
+                        Margin="0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        FontSize="14"
+                        FontWeight="Bold">
+                        Ввод шифруемого сообщения
+                    </Label>
+                </StackPanel>
+
+                <StackPanel
+                    Grid.Row="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal">
+                    <Button
+                        Width="150"
+                        Margin="0,10,0,0"
+                        Command="{Binding Encrypt}"
+                        Content="Зашифровать"
+                        Cursor="Hand"
+                        IsEnabled="{Binding EncryptButtonIsEnabled}"
+                        Style="{StaticResource MaterialDesignOutlinedButton}" />
+                    <ProgressBar
+                        Margin="12,20,12,12"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        IsIndeterminate="True"
+                        Style="{StaticResource MaterialDesignCircularProgressBar}"
+                        Visibility="{Binding ProgressBarVisibility}"
+                        Value="0" />
+                </StackPanel>
+                <TextBox
+                    Grid.Row="1"
+                    VerticalAlignment="Stretch"
+                    materialDesign:HintAssist.FloatingScale="0.95"
+                    materialDesign:HintAssist.Hint="Шифруемое сообщение"
+                    AcceptsReturn="True"
+                    BorderBrush="#44383838"
+                    FontSize="13"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    Text="{Binding PlainText}"
+                    TextWrapping="Wrap"
+                    VerticalScrollBarVisibility="Auto" />
+            </Grid>
+
+        </materialDesign:Card>
+        <materialDesign:Card
+            Grid.Row="0"
+            Grid.Column="2"
+            Margin="15"
+            Padding="10"
+            materialDesign:ShadowAssist.ShadowDepth="Depth2"
+            Background="#FAFAFA"
+            IsEnabled="False"
+            UniformCornerRadius="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="150" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                    <materialDesign:PackIcon
+                        Margin="0"
+                        Padding="0"
+                        HorizontalAlignment="Center"
+                        Kind="LockOutline"
+                        Style="{StaticResource IconTitle}" />
+                    <Label
+                        Margin="0"
+                        Padding="0"
+                        FontSize="14"
+                        FontWeight="Bold">
+                        Зашифрованное сообщение
+                    </Label>
+                </StackPanel>
+                <TextBox
+                    Grid.Row="1"
+                    Grid.RowSpan="2"
+                    VerticalAlignment="Stretch"
+                    materialDesign:HintAssist.FloatingScale="0.95"
+                    materialDesign:HintAssist.Hint="Зашифрованное сообщение"
+                    AcceptsReturn="True"
+                    BorderBrush="#44383838"
+                    FontSize="13"
+                    IsReadOnly="True"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    Text="{Binding EncryptedText}"
+                    TextWrapping="Wrap"
+                    VerticalScrollBarVisibility="Auto" />
+            </Grid>
+        </materialDesign:Card>
+    </Grid>
+</UserControl>

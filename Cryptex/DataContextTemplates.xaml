@@ -1,11 +1,12 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:rsaCryptography="clr-namespace:Cryptex.ViewModels.RsaCryptography"
     xmlns:rsaDemoStepper="clr-namespace:Cryptex.Views.RsaDemoStepper"
     xmlns:rsaDemoViewModels="clr-namespace:Cryptex.ViewModels.RsaDemoViewModels"
+    xmlns:secureMessages="clr-namespace:Cryptex.Views.SecureMessages"
     xmlns:viewModels="clr-namespace:Cryptex.ViewModels"
-    xmlns:views="clr-namespace:Cryptex.Views"
-    xmlns:rsaCryptography="clr-namespace:Cryptex.ViewModels.RsaCryptography">
+    xmlns:views="clr-namespace:Cryptex.Views">
     <DataTemplate DataType="{x:Type rsaCryptography:KeysViewModel}">
         <views:KeysView />
     </DataTemplate>
@@ -17,9 +18,6 @@
 
     <DataTemplate DataType="{x:Type rsaDemoViewModels:StepperRsaCalculateViewModel}">
         <rsaDemoStepper:StepperRsaCalculateView />
-    </DataTemplate>
-    <DataTemplate DataType="{x:Type rsaDemoViewModels:StepperRsaInfoViewModel}">
-        <rsaDemoStepper:StepperRsaInfoView />
     </DataTemplate>
     <DataTemplate DataType="{x:Type rsaDemoViewModels:StepperRsaSetPQViewModel}">
         <rsaDemoStepper:StepperRsaSetPQView />
@@ -33,6 +31,12 @@
 
     <!--#endregion-->
 
+    <DataTemplate DataType="{x:Type rsaCryptography:KeyEditorViewModel}">
+        <views:KeyEditorView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type rsaCryptography:EncryptMessageViewModel}">
+        <secureMessages:EncryptMessageView />
+    </DataTemplate>
     <DataTemplate DataType="{x:Type viewModels:DiffieHellmanDemoViewModel}">
         <views:DiffieHellmanDemoView />
     </DataTemplate>

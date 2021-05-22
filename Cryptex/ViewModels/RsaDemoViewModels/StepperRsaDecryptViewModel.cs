@@ -51,7 +51,7 @@ namespace Cryptex.ViewModels.RsaDemoViewModels
         private async Task EncryptMethod(object arg)
         {
             FinishButtonIsEnabled = false;
-            PlainText = _rsaDemoModel.PlainText;
+            PlainText = await Task.Run(() => _rsaDemoModel.PlainText);
             FinishButtonIsEnabled = true;
         }
 
@@ -61,7 +61,7 @@ namespace Cryptex.ViewModels.RsaDemoViewModels
             {
                 DataContext = new SampleMessageDialogViewModel((MessageDialogProperty)o)
             };
-            var result = await DialogHost.Show(view, "DialogRoot");
+            await DialogHost.Show(view, "DialogRoot");
         }
         #endregion
         

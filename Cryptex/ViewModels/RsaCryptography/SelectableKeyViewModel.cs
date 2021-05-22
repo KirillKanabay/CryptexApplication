@@ -14,6 +14,7 @@ namespace Cryptex.ViewModels.RsaCryptography
         private readonly RsaModel _rsaModel;
         private AsyncRelayCommand _removeCommand;
 
+        private readonly RsaKeyCryptography _rkc;
         #endregion
 
         #region Конструкторы
@@ -21,13 +22,14 @@ namespace Cryptex.ViewModels.RsaCryptography
         public SelectableKeyViewModel(RsaKeyCryptography rkc, RsaModel rsaModel)
         {
             _rsaModel = rsaModel;
-            Rkc = rkc;
+            _rkc = rkc;
         }
 
         #endregion
 
         #region Свойства
-        public RsaKeyCryptography Rkc { get; set; }
+
+        public string Name => _rkc.Name;
 
         #endregion
 
@@ -49,12 +51,25 @@ namespace Cryptex.ViewModels.RsaCryptography
 
         #region Методы
 
+        /// <summary>
+        /// Показывает простой диалог сообщения
+        /// </summary>
+        /// <param name="o"></param>
+        private async void ExecuteRunDialog(object o)
+        {
+            var view = new SampleMessageDialog()
+            {
+                DataContext = new SampleMessageDialogViewModel((MessageDialogProperty)o)
+            };
+            await DialogHost.Show(view, "RootDialog");
+        }
+
         private MessageDialogProperty GetConfirmDeleteDialogProperty()
         {
             return new MessageDialogProperty()
             {
                 Title = "Подтверждение удаления",
-                Message = "Будет удален следующий клиент:\n\n" + Rkc.Name
+                Message = "Будет удален следующий ключ:" + Name
             };
         }
 
@@ -80,7 +95,7 @@ namespace Cryptex.ViewModels.RsaCryptography
         private void ClosingDeleteDialogEventHandler(object sender, DialogClosingEventArgs eventargs)
         {
             if (Equals((eventargs.Parameter), true))
-                _rsaModel.DeleteAsync(Customer);
+                _rsaModel.Delete(_rkc);
         }
 
         #endregion

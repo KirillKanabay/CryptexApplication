@@ -9,18 +9,16 @@ namespace Cryptex.ViewModels
         private readonly StepperRsaCalculateViewModel _stepperRsaCalculateViewModel;
         private readonly StepperRsaDecryptViewModel _stepperRsaDecryptViewModel;
         private readonly StepperRsaEncryptViewModel _stepperRsaEncryptViewModel;
-        private readonly StepperRsaInfoViewModel _stepperRsaInfoViewModel;
         private readonly StepperRsaSetPQViewModel _stepperRsaSetPQViewModel;
 
         public RsaDemoViewModel(StepperRsaCalculateViewModel stepperRsaCalculateViewModel,
             StepperRsaDecryptViewModel stepperRsaDecryptViewModel,
-            StepperRsaEncryptViewModel stepperRsaEncryptViewModel, StepperRsaInfoViewModel stepperRsaInfoViewModel,
+            StepperRsaEncryptViewModel stepperRsaEncryptViewModel,
             StepperRsaSetPQViewModel stepperRsaSetPqViewModel)
         {
             _stepperRsaCalculateViewModel = stepperRsaCalculateViewModel;
             _stepperRsaDecryptViewModel = stepperRsaDecryptViewModel;
             _stepperRsaEncryptViewModel = stepperRsaEncryptViewModel;
-            _stepperRsaInfoViewModel = stepperRsaInfoViewModel;
             _stepperRsaSetPQViewModel = stepperRsaSetPqViewModel;
         }
 

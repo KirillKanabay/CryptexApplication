@@ -32,7 +32,7 @@ namespace Cryptex.Tests
             var key = new RsaKeyCryptography(2048, "DeletableKey");
 
             await rsaKeyWorker.Save(key);
-            await rsaKeyWorker.Delete(key);
+            rsaKeyWorker.Delete(key);
 
             var keys = await rsaKeyWorker.LoadKeys();
 

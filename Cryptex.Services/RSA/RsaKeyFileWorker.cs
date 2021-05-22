@@ -55,7 +55,7 @@ namespace Cryptex.Services.RSA
             return keys;
         }
 
-        public async Task Import(string path)
+        public async Task<RsaKeyCryptography> Import(string path)
         {
             var bf = new BinaryFormatter();
             await using var fs = new FileStream(path, FileMode.Open);
@@ -71,15 +71,7 @@ namespace Cryptex.Services.RSA
                 throw new Exception("Не удалось открыть ключ.");
             }
 
-            try
-            {
-                string keyName = Path.GetFileNameWithoutExtension(path);
-                await Save(rkc);
-            }
-            catch (Exception)
-            {
-                throw new Exception("Не удалось сохранить ключ");
-            }
+            return rkc;
         }
 
         public async Task Save(RsaKeyCryptography rkc)
@@ -90,13 +82,11 @@ namespace Cryptex.Services.RSA
             }
 
             var bf = new BinaryFormatter();
-            await using (var fs = new FileStream($"{Dir}/{rkc.Name}.ck", FileMode.OpenOrCreate))
-            {
-                bf.Serialize(fs, rkc.GetSerializableRsaKeys());
-            }
+            await using var fs = new FileStream($"{Dir}/{rkc.Name}.ck", FileMode.OpenOrCreate);
+            bf.Serialize(fs, rkc.GetSerializableRsaKeys());
         }
 
-        public async Task Delete(RsaKeyCryptography rkc)
+        public void Delete(RsaKeyCryptography rkc)
         {
             try
             {

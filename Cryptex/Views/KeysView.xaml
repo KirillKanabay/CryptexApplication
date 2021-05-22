@@ -119,17 +119,15 @@
                     MinWidth="500"
                     Margin="0,8,0,0"
                     HorizontalAlignment="Stretch"
-                    HorizontalContentAlignment="Stretch"
                     AutoGenerateColumns="False"
                     CanUserAddRows="False"
                     CanUserSortColumns="True"
-                    ColumnWidth="*"
                     HorizontalScrollBarVisibility="Auto"
                     ItemsSource="{Binding FilteredCollection}"
                     VerticalScrollBarVisibility="Visible">
                     <DataGrid.Columns>
                         <materialDesign:DataGridTextColumn
-                            Binding="{Binding RsaKey.Name}"
+                            Binding="{Binding Name, Mode=OneWay}"
                             Header="Название"
                             IsReadOnly="True" />
                         <!--<materialDesign:DataGridTextColumn

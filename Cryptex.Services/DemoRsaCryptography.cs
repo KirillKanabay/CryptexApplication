@@ -11,12 +11,12 @@ namespace Cryptex.Services
     public class DemoRsaCryptography : IDemoRsaCryptography
     {
         private readonly IPrimeNumbersWorker _primeNumbersWorker;
-        private readonly IGcdNumbersWorker _gcdNumbersWorker;
+        public IGcdNumbersWorker NumbersWorker { get; }
         private readonly List<uint> _generatedPrimeNumbers;
         public DemoRsaCryptography(IPrimeNumbersWorker primeNumbersWorker, IGcdNumbersWorker gcdNumbersWorker)
         {
             _primeNumbersWorker = primeNumbersWorker;
-            _gcdNumbersWorker = gcdNumbersWorker;
+            NumbersWorker = gcdNumbersWorker;
             _generatedPrimeNumbers = _primeNumbersWorker.GetPrimesFromFile(25000);
         }
 

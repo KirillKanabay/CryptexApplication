@@ -6,8 +6,8 @@ namespace Cryptex.Services.RSA
     public interface IRsaKeyFileWorker
     {
         Task<List<RsaKeyCryptography>> LoadKeys();
-        Task Import(string path);
+        Task<RsaKeyCryptography> Import(string path);
         Task Save(RsaKeyCryptography rkc);
-        Task Delete(RsaKeyCryptography rkc);
+        void Delete(RsaKeyCryptography rkc);
     }
 }

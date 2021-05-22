@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Autofac;
+using Cryptex.Helpers;
 using Cryptex.Models;
 using Cryptex.Services;
 using Cryptex.Services.Helpers;
@@ -23,14 +24,19 @@ namespace Cryptex
 
         private void RegisterViewModels(ContainerBuilder builder)
         {
-            builder.RegisterType<KeysViewModel>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<SecureFileViewModel>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<SecureMessagesViewModel>().AsSelf().InstancePerLifetimeScope();
-            
+            builder.RegisterType<KeysViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<KeyEditorViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<SelectableKeyViewModel>().AsSelf().InstancePerDependency();
+
+            builder.RegisterType<SecureFileViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<SecureMessagesViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<EncryptMessageViewModel>().AsSelf().InstancePerDependency();
+
+
+
             #region RSA Demo
 
             builder.RegisterType<RsaDemoViewModel>().AsSelf().InstancePerDependency();
-            builder.RegisterType<StepperRsaInfoViewModel>().AsSelf().InstancePerDependency();
             builder.RegisterType<StepperRsaSetPQViewModel>().AsSelf().InstancePerDependency();
             builder.RegisterType<StepperRsaCalculateViewModel>().AsSelf().InstancePerDependency();
             builder.RegisterType<StepperRsaEncryptViewModel>().AsSelf().InstancePerDependency();
@@ -67,16 +73,19 @@ namespace Cryptex
 
         private void RegisterServices(ContainerBuilder builder)
         {
+            builder.RegisterType<ViewModelContainer>().As<IViewModelContainer>().SingleInstance();
+            builder.RegisterType<RsaKeyFileWorker>().As<IRsaKeyFileWorker>().SingleInstance();
+
             builder.RegisterType<DemoRsaCryptography>().As<IDemoRsaCryptography>().InstancePerDependency();
             builder.RegisterType<PrimeNumbersWorker>().As<IPrimeNumbersWorker>().InstancePerLifetimeScope();
             builder.RegisterType<GcdNumbersWorker>().As<IGcdNumbersWorker>().InstancePerLifetimeScope();
             builder.RegisterType<DemoDHCryptography>().As<DemoDHCryptography>().InstancePerLifetimeScope();
-            builder.RegisterType<RsaKeyFileWorker>().As<IRsaKeyFileWorker>().InstancePerLifetimeScope();
+            
         }
 
         private void RegisterModels(ContainerBuilder builder)
         {
-            builder.RegisterType<RsaInfoModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<RsaModel>().AsSelf().SingleInstance();
             builder.RegisterType<RsaDemoModel>().AsSelf().InstancePerLifetimeScope();
         }
 
