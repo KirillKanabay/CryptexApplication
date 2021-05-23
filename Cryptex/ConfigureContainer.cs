@@ -4,6 +4,7 @@ using Cryptex.Helpers;
 using Cryptex.Models;
 using Cryptex.Services;
 using Cryptex.Services.DiffieHellman;
+using Cryptex.Services.Hash;
 using Cryptex.Services.Helpers;
 using Cryptex.Services.RSA;
 using Cryptex.ViewModels;
@@ -79,6 +80,7 @@ namespace Cryptex
             
             builder.RegisterType<RsaKeyFileWorker>().As<IRsaKeyFileWorker>().SingleInstance();
             builder.RegisterType<RsaCryptography>().As<IRsaCryptography>().SingleInstance();
+            builder.RegisterType<Md5Calculator>().As<IHashCalculator>().SingleInstance();
 
             builder.RegisterType<DemoRsaCryptography>().As<IDemoRsaCryptography>().InstancePerDependency();
             builder.RegisterType<PrimeNumbersWorker>().As<IPrimeNumbersWorker>().InstancePerLifetimeScope();

@@ -1,21 +1,57 @@
-﻿<ResourceDictionary
+﻿<!--
+    *
+    * В данном файле содержаться связи View и ViewModel
+    *
+-->
+<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:rsaCryptography="clr-namespace:Cryptex.ViewModels.RsaCryptography"
     xmlns:rsaDemoStepper="clr-namespace:Cryptex.Views.RsaDemoStepper"
     xmlns:rsaDemoViewModels="clr-namespace:Cryptex.ViewModels.RsaDemoViewModels"
+    xmlns:secureFiles="clr-namespace:Cryptex.Views.SecureFiles"
     xmlns:secureMessages="clr-namespace:Cryptex.Views.SecureMessages"
     xmlns:viewModels="clr-namespace:Cryptex.ViewModels"
     xmlns:views="clr-namespace:Cryptex.Views">
+
+    <!--#region Keys-->
     <DataTemplate DataType="{x:Type rsaCryptography:KeysViewModel}">
         <views:KeysView />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type rsaCryptography:KeyEditorViewModel}">
+        <views:KeyEditorView />
+    </DataTemplate>
+
+    <!--#endregion-->
+
+    <!--#region Encrypt&Decrypt Messages-->
+    <DataTemplate DataType="{x:Type rsaCryptography:SecureMessagesViewModel}">
+        <views:SecureMessagesView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type rsaCryptography:EncryptMessageViewModel}">
+        <secureMessages:EncryptMessageView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type rsaCryptography:DecryptMessageViewModel}">
+        <secureMessages:DecryptMessageView />
+    </DataTemplate>
+    <!--#endregion-->
+
+    <!--#region Encrypt&Decrypt Files-->
+    <DataTemplate DataType="{x:Type rsaCryptography:SecureFileViewModel}">
+        <views:SecureFileView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type rsaCryptography:EncryptFileViewModel}">
+        <secureFiles:EncryptFileView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type rsaCryptography:DecryptFileViewModel}">
+        <secureFiles:DecryptFileView />
+    </DataTemplate>
+    <!--#endregion-->
+
+    <!--#region RSA demo stepper-->
     <DataTemplate DataType="{x:Type viewModels:RsaDemoViewModel}">
         <views:RsaDemoView />
     </DataTemplate>
-
-    <!--#region RSA demo stepper-->
-
     <DataTemplate DataType="{x:Type rsaDemoViewModels:StepperRsaCalculateViewModel}">
         <rsaDemoStepper:StepperRsaCalculateView />
     </DataTemplate>
@@ -31,24 +67,10 @@
 
     <!--#endregion-->
 
-    <DataTemplate DataType="{x:Type rsaCryptography:KeyEditorViewModel}">
-        <views:KeyEditorView />
-    </DataTemplate>
-    <DataTemplate DataType="{x:Type rsaCryptography:EncryptMessageViewModel}">
-        <secureMessages:EncryptMessageView />
-    </DataTemplate>
-    <DataTemplate DataType="{x:Type rsaCryptography:DecryptMessageViewModel}">
-        <secureMessages:DecryptMessageView />
-    </DataTemplate>
     <DataTemplate DataType="{x:Type viewModels:DiffieHellmanDemoViewModel}">
         <views:DiffieHellmanDemoView />
     </DataTemplate>
-    <DataTemplate DataType="{x:Type rsaCryptography:SecureFileViewModel}">
-        <views:SecureFileView />
-    </DataTemplate>
-    <DataTemplate DataType="{x:Type rsaCryptography:SecureMessagesViewModel}">
-        <views:SecureMessagesView />
-    </DataTemplate>
+
     <DataTemplate DataType="{x:Type viewModels:AboutProgramViewModel}">
         <views:AboutProgramView />
     </DataTemplate>
