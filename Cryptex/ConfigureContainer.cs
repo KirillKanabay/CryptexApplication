@@ -31,11 +31,22 @@ namespace Cryptex
             builder.RegisterType<SelectableKeyViewModel>().AsSelf().InstancePerDependency();
 
             builder.RegisterType<SecureFileViewModel>().AsSelf().InstancePerDependency();
+
+            #region SecureMessages
+
             builder.RegisterType<SecureMessagesViewModel>().AsSelf().InstancePerDependency();
             builder.RegisterType<EncryptMessageViewModel>().AsSelf().InstancePerDependency();
             builder.RegisterType<DecryptMessageViewModel>().AsSelf().InstancePerDependency();
 
+            #endregion
 
+            #region SecureFiles
+
+            builder.RegisterType<SecureFileViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<EncryptFileViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<DecryptFileViewModel>().AsSelf().InstancePerDependency();
+
+            #endregion
 
             #region RSA Demo
 

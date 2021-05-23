@@ -12,9 +12,9 @@ namespace Cryptex.ViewModels.RsaCryptography
         }
 
         public BaseViewModel EncryptFileViewModel =>
-            _viewModelContainer.GetViewModel<EncryptMessageViewModel>();
+            _viewModelContainer.GetViewModel<EncryptFileViewModel>();
 
         public BaseViewModel DecryptFileViewModel =>
-            _viewModelContainer.GetViewModel<DecryptMessageViewModel>();
+            _viewModelContainer.GetViewModel<DecryptFileViewModel>();
     }
 }

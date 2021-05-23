@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
 using Cryptex.Helpers.Extensions;
+using Cryptex.Services.Hash;
 using Cryptex.Services.RSA;
 
 namespace Cryptex.Models
@@ -14,11 +15,13 @@ namespace Cryptex.Models
         public event Func<object, Task> RsaModelChanged; 
         private readonly IRsaKeyFileWorker _rsaKeyFileWorker;
         private readonly IRsaCryptography _rsaCryptography;
+        private readonly IHashCalculator _hashCalculator;
         private readonly UnicodeEncoding _unicodeEncoding;
-        public RsaModel(IRsaKeyFileWorker rsaKeyFileWorker, IRsaCryptography rsaCryptography)
+        public RsaModel(IRsaKeyFileWorker rsaKeyFileWorker, IRsaCryptography rsaCryptography, IHashCalculator hashCalculator)
         {
             _rsaKeyFileWorker = rsaKeyFileWorker;
             _rsaCryptography = rsaCryptography;
+            _hashCalculator = hashCalculator;
             _unicodeEncoding = new UnicodeEncoding();
         }
 
@@ -71,5 +74,7 @@ namespace Cryptex.Models
 
             return _unicodeEncoding.GetString(decryptedData);
         }
+
+        public async Task<string> CalculateHash(string path) => await _hashCalculator.ComputeChecksum(path);
     }
 }
