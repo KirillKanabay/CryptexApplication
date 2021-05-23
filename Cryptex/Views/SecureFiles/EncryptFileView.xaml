@@ -11,7 +11,7 @@
     d:DesignWidth="1000"
     FontFamily="Google Sans"
     mc:Ignorable="d">
-    
+
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -136,7 +136,7 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60" />
-                    <RowDefinition Height="160" />
+                    <RowDefinition MinHeight="160" />
                     <RowDefinition Height="70" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
