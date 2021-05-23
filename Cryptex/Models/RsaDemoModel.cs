@@ -14,7 +14,17 @@ namespace Cryptex.Models
         {
             _demoRsa = demoRsa;
         }
+        public void Clear()
+        {
+            PlainText = default;
+            EncryptedText = default;
+            DecryptedText = default;
+            _encryptedMessage = default;
+            _demoRsa.Clear();
+        }
 
+        public string EncryptedText { get; set; }
+        public string DecryptedText { get; set; }
         public long P => _demoRsa.P;
         public long Q => _demoRsa.Q;
         public long D => _demoRsa.D;
@@ -22,7 +32,7 @@ namespace Cryptex.Models
         public long N => _demoRsa.N;
         public long Fi => _demoRsa.Fi;
         public string EncryptedMessage => string.Concat(_encryptedMessage);
-        public string PlainText { get; private set; }
+        public string PlainText { get; set; }
 
         public async Task GenerateP() => await _demoRsa.GenerateP();
         public async Task GenerateQ() => await _demoRsa.GenerateQ();
@@ -31,7 +41,6 @@ namespace Cryptex.Models
         {
             await _demoRsa.PSet(p);
         }
-
         public async Task SetQ(long q)
         {
             await _demoRsa.QSet(q);
@@ -50,5 +59,6 @@ namespace Cryptex.Models
         {
             return await _demoRsa.Decrypt(_encryptedMessage, D, N);
         }
+
     }
 }

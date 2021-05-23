@@ -19,6 +19,16 @@ namespace Cryptex.Services.RSA
             _generatedPrimeNumbers = _primeNumbersWorker.GetPrimesFromFile(25000);
         }
 
+        public void Clear()
+        {
+            P = default;
+            Q = default;
+            N = default;
+            Fi = default;
+            D = default;
+            E = default;
+        }
+
         public long P { get; private set; }
         public long Q { get; private set; }
         public long N { get; private set; }

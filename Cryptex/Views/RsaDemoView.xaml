@@ -26,11 +26,12 @@
         </Label>
         <mde:Stepper
             Grid.Row="1"
+            ActiveStep="{Binding ActiveStep, Mode=TwoWay}"
             BlockNavigationOnValidationErrors="True"
-            CancelNavigationCommand="Close"
-            IsLinear="True"
+            CancelNavigationCommand="{Binding Cancel}"
+            IsLinear="{Binding IsLinear}"
             Layout="Horizontal"
-            Steps="{Binding Path=Steps, Mode=OneTime}" />
+            Steps="{Binding Path=Steps}" />
 
     </Grid>
 </UserControl>

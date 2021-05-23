@@ -33,10 +33,10 @@ namespace Cryptex.ViewModels.RsaDemoViewModels
         
         public string PlainText
         {
-            get => _plainText;
+            get => _rsaDemoModel.DecryptedText;
             set
             {
-                _plainText = value;
+                _rsaDemoModel.DecryptedText = value;
                 OnPropertyChanged(nameof(PlainText));
             }
         }

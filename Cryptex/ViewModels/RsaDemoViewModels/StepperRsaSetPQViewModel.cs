@@ -23,6 +23,7 @@ namespace Cryptex.ViewModels.RsaDemoViewModels
         public StepperRsaSetPQViewModel(RsaDemoModel rsaDemoModel)
         {
             _rsaDemoModel = rsaDemoModel;
+            _rsaDemoModel.Clear();
         }
 
         public string P
@@ -72,18 +73,22 @@ namespace Cryptex.ViewModels.RsaDemoViewModels
         {
             await _rsaDemoModel.GenerateP();
             P = _rsaDemoModel.P.ToString();
+            _isSetup = false;
         }
 
         private async Task GenerateQMethod(object arg)
         {
             await _rsaDemoModel.GenerateQ();
             Q = _rsaDemoModel.Q.ToString();
+            _isSetup = false;
         }
 
         private async Task SetupMethod(object arg)
         {
             ProgressBarVisibility = Visibility.Visible;
             
+            _rsaDemoModel.Clear();
+
             await _rsaDemoModel.SetP(long.Parse(P));
             await _rsaDemoModel.SetQ(long.Parse(Q));
             await _rsaDemoModel.Calculate();

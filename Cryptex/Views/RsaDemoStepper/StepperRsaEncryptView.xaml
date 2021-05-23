@@ -134,6 +134,7 @@
             Grid.Column="2"
             Margin="0"
             HorizontalAlignment="Right"
+            Back="Назад"
             Continue="Продолжить"
             IsContinueEnabled="{Binding ButtonIsEnabled}" />
     </Grid>

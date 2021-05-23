@@ -136,7 +136,7 @@
             Grid.Column="2"
             Margin="0"
             HorizontalAlignment="Right"
-            Cancel="Завершить" />
+            Back="Назад" />
     </Grid>
 </UserControl>
 

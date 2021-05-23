@@ -5,6 +5,7 @@ namespace Cryptex.Services
 {
     public interface IDemoRsaCryptography
     {
+        void Clear();
         long P { get; }
         long Q { get; }
         long N { get; }

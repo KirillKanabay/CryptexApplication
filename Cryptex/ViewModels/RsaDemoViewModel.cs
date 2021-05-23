@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Cryptex.Helpers.Commands;
 using Cryptex.ViewModels.RsaDemoViewModels;
 using MaterialDesignExtensions.Model;
 

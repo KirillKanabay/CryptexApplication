@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,15 +26,7 @@ namespace Cryptex.ViewModels.RsaDemoViewModels
             _rsaDemoModel = rsaDemoModel;
         }
 
-        public bool ContinueButtonIsEnabled
-        {
-            get => _continueButtonIsEnabled;
-            set
-            {
-                _continueButtonIsEnabled = value;
-                OnPropertyChanged(nameof(ContinueButtonIsEnabled));
-            }
-        }
+        public bool ContinueButtonIsEnabled => EncryptedText?.Trim().Length > 0;
 
         public bool IsProcessing
         {
@@ -47,20 +40,20 @@ namespace Cryptex.ViewModels.RsaDemoViewModels
 
         public string PlainText
         {
-            get => _plainText;
+            get => _rsaDemoModel.PlainText;
             set
             {
-                _plainText = value;
+                _rsaDemoModel.PlainText = value;
                 OnPropertyChanged(nameof(PlainText));
             }
         }
 
         public string EncryptedText
         {
-            get => _encryptedText;
+            get => _rsaDemoModel.EncryptedText;
             set
             {
-                _encryptedText = value;
+                _rsaDemoModel.EncryptedText = value;
                 OnPropertyChanged(nameof(EncryptedText));
             }
         }
@@ -73,10 +66,9 @@ namespace Cryptex.ViewModels.RsaDemoViewModels
         private async Task EncryptMethod(object arg)
         {
             IsProcessing = true;
-            ContinueButtonIsEnabled = false;
+            EncryptedText = String.Empty;
             EncryptedText = await _rsaDemoModel.Encrypt(PlainText);
             IsProcessing = false;
-            ContinueButtonIsEnabled = true;
         }
 
         public async void ExecuteRunDialog(object o)
