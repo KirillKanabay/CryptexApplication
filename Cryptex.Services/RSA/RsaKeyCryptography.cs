@@ -9,7 +9,7 @@ namespace Cryptex.Services.RSA
 
         public RSAParameters PublicKey;
         public RSAParameters PrivateKey;
-        public readonly string Name;
+        public string Name { get; set; }
 
         public RsaKeyCryptography(SerializableRsaKeys keys, string name)
         {
