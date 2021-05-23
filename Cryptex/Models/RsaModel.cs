@@ -78,5 +78,20 @@ namespace Cryptex.Models
         public async Task<string> CalculateHash(string path) => await _hashCalculator.ComputeChecksum(path);
 
         public async Task Export(RsaKeyCryptography rkc, string path) => await _rsaKeyFileWorker.Save(rkc, path);
+
+        public async Task<bool> CheckSignature(RsaKeyCryptography rkc, string signature, string hash)
+        {
+            string decryptedText;
+            try
+            {
+                decryptedText = await Decrypt(signature, rkc);
+            }
+            catch
+            {
+                return false;
+            }
+
+            return decryptedText.ToLower() == hash.ToLower();
+        }
     }
 }

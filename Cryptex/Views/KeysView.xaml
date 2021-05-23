@@ -97,8 +97,6 @@
                             x:Name="SearchButton"
                             Width="24"
                             Height="24"
-                            Command="{Binding SearchCommand}"
-                            CommandParameter="{Binding ElementName=SearchBox, Path=Text}"
                             Style="{DynamicResource MaterialDesignToolButton}">
                             <materialDesign:PackIcon Kind="Magnify" Opacity=".56" />
                         </Button>
