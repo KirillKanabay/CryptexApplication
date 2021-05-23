@@ -39,7 +39,7 @@ namespace Cryptex.ViewModels
             new FirstLevelNavigationItem() { Label = "Работа с файлами", Icon = PackIconKind.FileKey},
             new DividerNavigationItem(),
             new FirstLevelNavigationItem() { Label = "Демонстрация RSA", Icon = PackIconKind.EyeOutline},
-            new FirstLevelNavigationItem() { Label = "Демонстрация DH", Icon = PackIconKind.EyeOutline},
+            // new FirstLevelNavigationItem() { Label = "Демонстрация DH", Icon = PackIconKind.EyeOutline},
             new DividerNavigationItem(),
             new FirstLevelNavigationItem() { Label = "О программе", Icon = PackIconKind.InformationOutline},
         };

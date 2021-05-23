@@ -79,7 +79,7 @@ namespace Cryptex
                     {"Работа с текстом", c.Resolve<SecureMessagesViewModel>()},
                     {"Работа с файлами", c.Resolve<SecureFileViewModel>()},
                     {"Демонстрация RSA", c.Resolve<RsaDemoViewModel>()},
-                    {"Демонстрация DH", c.Resolve<DiffieHellmanDemoViewModel>()},
+                    //{"Демонстрация DH", c.Resolve<DiffieHellmanDemoViewModel>()},
                     {"О программе", c.Resolve<AboutProgramViewModel>()},
                 }
             });
