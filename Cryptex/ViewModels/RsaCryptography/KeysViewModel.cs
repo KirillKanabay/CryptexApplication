@@ -8,7 +8,6 @@ using Cryptex.Helpers.Commands;
 using Cryptex.Models;
 using Cryptex.Services.RSA;
 using Cryptex.Views.Dialogs;
-using MaterialDesignExtensions.Controls;
 using MaterialDesignThemes.Wpf;
 
 namespace Cryptex.ViewModels.RsaCryptography

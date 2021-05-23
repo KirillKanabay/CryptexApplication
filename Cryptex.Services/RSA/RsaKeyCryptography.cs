@@ -5,7 +5,7 @@ namespace Cryptex.Services.RSA
 {
     public class RsaKeyCryptography
     {
-        private readonly RSACryptoServiceProvider _cryptoServiceProvider;
+        private RSACryptoServiceProvider _cryptoServiceProvider;
 
         public RSAParameters PublicKey;
         public RSAParameters PrivateKey;
@@ -35,8 +35,16 @@ namespace Cryptex.Services.RSA
             PrivateKey = csp.ExportParameters(true);
         }
 
-        public SerializableRsaKeys GetSerializableRsaKeys() => new SerializableRsaKeys(
-            publicKeyXml: _cryptoServiceProvider.ToXmlString(false),
-            privateKeyXml: _cryptoServiceProvider.ToXmlString(true));
+        public SerializableRsaKeys GetSerializableRsaKeys()
+        {
+            if (_cryptoServiceProvider is null)
+            {
+                _cryptoServiceProvider = new RSACryptoServiceProvider();
+                _cryptoServiceProvider.ImportParameters(PrivateKey);
+            }
+            return new SerializableRsaKeys(
+                publicKeyXml: _cryptoServiceProvider.ToXmlString(false),
+                privateKeyXml: _cryptoServiceProvider.ToXmlString(true));
+        } 
     }
 }

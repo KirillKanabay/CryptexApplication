@@ -24,7 +24,7 @@ namespace Cryptex.Validators
                     return string.Empty;
                 }
             }
-            return "Число не входит в указанный диапазон";
+            return $"Число не входит в диапазон: {_start}-{_end}";
         }
     }
 }

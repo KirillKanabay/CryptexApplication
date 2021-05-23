@@ -86,6 +86,18 @@ namespace Cryptex.Services.RSA
             bf.Serialize(fs, rkc.GetSerializableRsaKeys());
         }
 
+        public async Task Save(RsaKeyCryptography rkc, string path)
+        {
+            if (!Directory.Exists(Dir))
+            {
+                Directory.CreateDirectory(Dir);
+            }
+
+            var bf = new BinaryFormatter();
+            await using var fs = new FileStream(path, FileMode.OpenOrCreate);
+            bf.Serialize(fs, rkc.GetSerializableRsaKeys());
+        }
+
         public void Delete(RsaKeyCryptography rkc)
         {
             try

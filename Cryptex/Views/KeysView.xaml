@@ -134,6 +134,18 @@
                             Binding="{Binding RsaKey.PublicKey}"
                             Header="Открытый ключ"
                             IsReadOnly="True" />-->
+                        <DataGridTemplateColumn Header="Экспортировать">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Command="{Binding ExportKey}" Style="{StaticResource TransparentButton}">
+                                        <materialDesign:PackIcon
+                                            Width="18"
+                                            Height="18"
+                                            Kind="ContentSaveOutline" />
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                         <DataGridTemplateColumn Header="Удалить">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

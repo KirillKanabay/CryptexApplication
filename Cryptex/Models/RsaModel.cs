@@ -76,5 +76,7 @@ namespace Cryptex.Models
         }
 
         public async Task<string> CalculateHash(string path) => await _hashCalculator.ComputeChecksum(path);
+
+        public async Task Export(RsaKeyCryptography rkc, string path) => await _rsaKeyFileWorker.Save(rkc, path);
     }
 }

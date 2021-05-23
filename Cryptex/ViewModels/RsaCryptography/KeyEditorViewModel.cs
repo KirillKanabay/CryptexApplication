@@ -78,11 +78,15 @@ namespace Cryptex.ViewModels.RsaCryptography
         private async Task SaveMethod(object parameter)
         {
             ProgressBarVisibility = Visibility.Visible;
-
-            await _rsaModel.AddAsync(new RsaKeyCryptography(int.Parse(_length), TrueFileName.Get(Name)));
-
-            ProgressBarVisibility = Visibility.Collapsed;
-
+            try
+            {
+                await _rsaModel.AddAsync(new RsaKeyCryptography(int.Parse(_length), TrueFileName.Get(Name)));
+            }
+            finally
+            {
+                ProgressBarVisibility = Visibility.Collapsed;
+            }
+           
             string snackbarMessage = $"Ключ \"{Name}\" успешно добавлен.";
 
             SendSnackbar(snackbarMessage);
@@ -114,7 +118,7 @@ namespace Cryptex.ViewModels.RsaCryptography
                 {
                     nameof(Name) => new Validation(new NotEmptyFieldValidationRule(Name)).Validate(),
                     nameof(Length) => new Validation(new NotEmptyFieldValidationRule(Length),
-                        new NumberValidationRule(Length), new RangeNumberValidationRule(Length, 512, 4096)).Validate(),
+                        new NumberValidationRule(Length), new RangeNumberValidationRule(Length, 1024, 32768)).Validate(),
                     _ => null
                 };
 

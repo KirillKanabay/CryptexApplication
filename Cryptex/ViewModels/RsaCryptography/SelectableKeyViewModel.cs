@@ -1,9 +1,15 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using Cryptex.Helpers;
 using Cryptex.Helpers.Commands;
 using Cryptex.Models;
 using Cryptex.Services.RSA;
 using Cryptex.Views.Dialogs;
 using MaterialDesignThemes.Wpf;
+using Microsoft.Win32;
 
 namespace Cryptex.ViewModels.RsaCryptography
 {
@@ -33,7 +39,7 @@ namespace Cryptex.ViewModels.RsaCryptography
 
         #endregion
 
-        #region Диалоги
+        #region Команды
 
         public AsyncRelayCommand RemoveCommand
         {
@@ -47,9 +53,29 @@ namespace Cryptex.ViewModels.RsaCryptography
             }
         }
 
+        public AsyncRelayCommand ExportKey => new AsyncRelayCommand(ExportKeyMethod,
+            (ex) =>
+            {
+                ExecuteRunDialog(new MessageDialogProperty() { Title = "Ошибка", Message = ex.Message });
+            });
+
         #endregion
 
         #region Методы
+        private async Task ExportKeyMethod(object arg)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            string keyFileName = Name;
+
+
+            sfd.Filter = "RSA ключ (*.ck)|*.ck";
+            sfd.FileName = keyFileName;
+
+            if (sfd.ShowDialog() == false)
+                return;
+            await _rsaModel.Export(_rkc, sfd.FileName);
+            SendSnackbar($"Ключ \"{Name}\" экспортирован.");
+        }
 
         /// <summary>
         /// Показывает простой диалог сообщения
@@ -69,7 +95,7 @@ namespace Cryptex.ViewModels.RsaCryptography
             return new MessageDialogProperty()
             {
                 Title = "Подтверждение удаления",
-                Message = "Будет удален следующий ключ:" + Name
+                Message = "Будет удален следующий ключ: " + Name
             };
         }
 
